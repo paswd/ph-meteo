@@ -1,6 +1,8 @@
 #ifndef _HEADERS_HPP_
 #define _HEADERS_HPP_
 
+#include <map>
+
 const size_t TEMP_ARR_LEN = 3;
 const size_t PRESS_ARR_LEN = 6;
 const size_t ALT_ARR_LEN = 4;
