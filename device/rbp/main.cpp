@@ -49,7 +49,7 @@ bool ReadParams(void) {
 	return true;
 }
 void PrintParams(void) {
-	for (auto it = APP_PARAMS.begin(); it != v.end(); it++) {
+	for (auto it = APP_PARAMS.begin(); it != APP_PARAMS.end(); it++) {
     	cout << it->first << " : "<< it->second << endl;
 	}
 }
