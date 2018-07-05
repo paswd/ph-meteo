@@ -29,7 +29,6 @@ const string COLOR_RESET("\033[0m");
 int main(void) {
 	cout << "Server starting..." << endl;
 
-	map
 
 	string base = "/dev/ttyACM";
 	int fd = -1;
