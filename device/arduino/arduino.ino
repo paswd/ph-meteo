@@ -10,23 +10,53 @@
 
 #define DHTPIN A0
 
+#define TEMP_ARR_LEN 3
+#define PRESS_ARR_LEN 6
+#define ALT_ARR_LEN 4
+#define HUM_ARR_LEN 3
+
+//TOTAL STRING 17 BYTES
+
 //Adafruit_BMP280 bmp; // I2C
 Adafruit_BMP280 bmp(BMP_CS); // hardware SPI
 //Adafruit_BMP280 bmp(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
 
-//DHT dht(DHTPIN, DHT22);
-float humVal = 0;
-
-float calc_hum(float val){ 
+float calc_hum(float val) { 
   float H; 
   H = 0.163 * val;
   //RH10 = val + 6*val/10 + 3*val/100; = 0.163*val 
   return(H); 
-} 
+}
+
+long floatToLong(float val) {
+  long res = (long) val;
+  long md = (long) (val * 10);
+  md %= 10;
+  if (md >= 5) {
+    res++;
+  }
+  return res;
+}
+
+char numToChar(long num) {
+  num %= 10;
+  return (char) (num + '0');
+}
+
+void numToCharArr(long num, char *arr, int len) {
+  for (int i = len - 1; i >= 0; i--) {
+    arr[i] = numToChar(num);
+    num /= 10;
+  }
+}
+void printCharArr(char *arr, int len) {
+  for (int i = 0; i < len; i++) {
+    Serial.print(arr[i]);
+  }
+}
 
 void setup() {
   Serial.begin(9600);
-  //Serial.println(F("BMP280 test"));
   
   if (!bmp.begin()) {  
     Serial.println(F("Could not find a valid BMP280 sensor, check wiring!"));
@@ -40,24 +70,25 @@ void loop() {
     if (in_byte != '1') {
       return;
     }
-    Serial.print(F("Temperature = "));
-    Serial.print(bmp.readTemperature());
-    Serial.println(" *C");
-    
-    Serial.print(F("Pressure = "));
-    Serial.print(bmp.readPressure());
-    Serial.println(" Pa");
+    long tempVal = floatToLong(bmp.readTemperature());
+    long pressVal = floatToLong(bmp.readPressure());
+    long altVal = floatToLong(bmp.readAltitude(1013.25));
+    long humVal = floatToLong(calc_hum(analogRead(DHTPIN)));
 
-    Serial.print(F("Approx altitude = "));
-    Serial.print(bmp.readAltitude(1013.25)); // this should be adjusted to your local forcase
-    Serial.println(" m");
+    char tempArr[TEMP_ARR_LEN];
+    char pressArr[PRESS_ARR_LEN];
+    char altArr[ALT_ARR_LEN];
+    char humArr[HUM_ARR_LEN];
 
-    humVal = calc_hum(analogRead(DHTPIN));
-    Serial.print(F("Humedad = "));
-    Serial.print(humVal);
-    Serial.println(" %");
-    Serial.println();
-    
-    //delay(2000);
+    numToCharArr(tempVal, tempArr, TEMP_ARR_LEN);
+    numToCharArr(pressVal, pressArr, PRESS_ARR_LEN);
+    numToCharArr(altVal, altArr, ALT_ARR_LEN);
+    numToCharArr(humVal, humArr, HUM_ARR_LEN);
+
+    printCharArr(tempArr, TEMP_ARR_LEN);
+    printCharArr(pressArr, PRESS_ARR_LEN);
+    printCharArr(altArr, ALT_ARR_LEN);
+    printCharArr(humArr, HUM_ARR_LEN);
+    Serial.print('\n');
   }
 }
