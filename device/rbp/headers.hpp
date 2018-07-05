@@ -29,6 +29,11 @@ public:
 	int Arduino;
 };
 
-RuntimeParams PARAMS;
+#if  defined _PARAMS
+#define _PARAMS_X
+#else
+#define _PARAMS_X extern
+#endif
+_PARAMS_X RuntimeParams PARAMS;
 
 #endif
