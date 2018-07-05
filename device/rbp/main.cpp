@@ -3,7 +3,7 @@
 #include <map>
 #include <ctime>
 #include <string>
-#include <stringstream>
+#include <sstream>
 #include <string.h>
 #include <unistd.h>
 #include <wiringSerial.h>
