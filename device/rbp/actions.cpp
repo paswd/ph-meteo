@@ -1,6 +1,7 @@
 #include "actions.hpp"
 #include "basfunctions.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <ctime>
 #include <string>
