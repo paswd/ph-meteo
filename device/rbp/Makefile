@@ -3,7 +3,7 @@ COMPILLER=g++
 
 all: start
 
-start: main.o
+start: basfunctions.o actions.o main.o
 	$(COMPILLER) $(FLAGS) -o phm-device basfunctions.o actions.o main.o
 
 main.o: main.cpp
