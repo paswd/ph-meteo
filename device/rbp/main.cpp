@@ -12,7 +12,7 @@
 using namespace std;
 
 long long StringToNum(string str) {
-	stringstream ssream(str);
+	stringstream sstream(str);
 	long long res;
 	sstream >> res;
 	return res;

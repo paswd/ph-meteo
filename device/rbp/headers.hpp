@@ -23,7 +23,7 @@ const std::string MESSAGE_FATAL_ERROR = COLOR_RED + "FATAL ERROR! The server was
 class RuntimeParams {
 public:
 	std::map <std::string, std::string> AppParams;
-	size_t CurrenTimeoutMinutes;
+	size_t CurrentTimeoutMinutes;
 	int Arduino;
 };
 
