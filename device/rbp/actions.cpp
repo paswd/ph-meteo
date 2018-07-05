@@ -4,7 +4,6 @@
 #include <fstream>
 #include <ctime>
 #include <string>
-#include <sstream>
 #include <string.h>
 #include <unistd.h>
 #include <wiringSerial.h>

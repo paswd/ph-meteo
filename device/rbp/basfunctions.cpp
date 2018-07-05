@@ -1,4 +1,5 @@
 #include "basfunctions.hpp"
+#include <sstream>
 
 using namespace std;
 
