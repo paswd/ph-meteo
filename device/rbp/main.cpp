@@ -26,10 +26,46 @@ const string COLOR_CYAN("\033[0;36m");
 const string COLOR_MAGENTA("\033[0;35m");
 const string COLOR_RESET("\033[0m");
 
+const string MESSAGE_FATAL_ERROR = COLOR_RED + "FATAL ERROR! The server was interrupt" + COLOR_RESET;
+
+map <string, string> APP_PARAMS;
+
+bool ReadParams(void) {
+	ifstream fin("init.conf");
+	if (!fin.is_open()) {
+		return false;
+	}
+	string tmp;
+	bool is_first_param = true;
+	string name_tmp = "";
+	while (fin >> tmp) {
+		if (is_first_param) {
+			name_tmp = tmp;
+		} else {
+			APP_PARAMS.insert(pair <string, string>(name_tmp, tmp));
+		}
+		is_first_param = !is_first_param;
+	}
+	return true;
+}
+void PrintParams(void) {
+	for (auto it = APP_PARAMS.begin(); it != v.end(); it++) {
+    	cout << it->first << " : "<< it->second << endl;
+	}
+}
+
 int main(void) {
-	cout << "Server starting..." << endl;
+	cout << "Reading config... ";
+	if (ReadParams()) {
+		cout << COLOR_GREEN << "[OK]" << COLOR_RESET << endl;
+	} else {
+		cout << COLOR_RED << "[FAILED]" << COLOR_RESET << endl;
+		cout << MESSAGE_FATAL_ERROR << endl;
+		return 0;
+	}
+	PrintParams();
 
-
+	cout << "Arduino connection initialization" << endl;
 	string base = "/dev/ttyACM";
 	int fd = -1;
 	for (int i = 0; fd == -1 && i < 10; i++) {
@@ -46,10 +82,13 @@ int main(void) {
 	}
 	if (fd == -1) {
 		cout << COLOR_RED << "Arduino connection error" << COLOR_RESET << endl;
+		cout << MESSAGE_FATAL_ERROR << endl;
+
 		return 0;
 	}
-	char bf[INPUT_MESSAGE_SIZE + 1];
-	bf[INPUT_MESSAGE_SIZE] = '\n';
+	cout << COLOR_GREEN << "Arduino has been successfuly found" << COLOR_RESET << endl;
+	//char bf[INPUT_MESSAGE_SIZE + 1];
+	//bf[INPUT_MESSAGE_SIZE] = '\n';
 
 	return 0;
 }
