@@ -4,10 +4,16 @@ COMPILLER=g++
 all: start
 
 start: main.o
-	$(COMPILLER) $(FLAGS) -o phm-device main.o
+	$(COMPILLER) $(FLAGS) -o phm-device basfunctions.o actions.o main.o
 
 main.o: main.cpp
 	$(COMPILLER) -c $(FLAGS) main.cpp
+
+actions.o: actions.cpp
+	$(COMPILLER) -c $(FLAGS) actions.cpp
+
+basfunctions.o: basfunctions.cpp
+	$(COMPILLER) -c $(FLAGS) basfunctions.cpp
 
 clean:
 	@-rm -f *.o *.gch *.dat watcher

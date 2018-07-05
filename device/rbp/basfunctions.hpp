@@ -3,7 +3,7 @@
 
 #include "headers.hpp"
 
-long long StringToNum(string str);
+long long StringToNum(std::string str);
 
 
 #endif
