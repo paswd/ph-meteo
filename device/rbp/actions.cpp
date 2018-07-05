@@ -11,6 +11,8 @@
 
 using namespace std;
 
+RuntimeParams PARAMS;
+
 bool ReadParams(void) {
 	ifstream fin("init.conf");
 	if (!fin.is_open()) {

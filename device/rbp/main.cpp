@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#define _PARAMS
 #include "headers.hpp"
 #include "basfunctions.hpp"
 #include "actions.hpp"

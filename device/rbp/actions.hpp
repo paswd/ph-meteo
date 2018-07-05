@@ -5,8 +5,6 @@
 #include <string>
 #include <string.h>
 #include <unistd.h>
-
-#define _PARAMS
 #include "headers.hpp"
 
 bool ReadParams(void);
