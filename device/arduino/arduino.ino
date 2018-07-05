@@ -15,7 +15,7 @@ Adafruit_BMP280 bmp(BMP_CS); // hardware SPI
 //Adafruit_BMP280 bmp(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
 
 //DHT dht(DHTPIN, DHT22);
-float humVal = 0; 
+float humVal = 0;
 
 float calc_hum(float val){ 
   float H; 
@@ -35,6 +35,11 @@ void setup() {
 }
 
 void loop() {
+  if (Serial.available() > 0) {
+    int in_byte = Serial.read();
+    if (in_byte != '1') {
+      return;
+    }
     Serial.print(F("Temperature = "));
     Serial.print(bmp.readTemperature());
     Serial.println(" *C");
@@ -53,5 +58,6 @@ void loop() {
     Serial.println(" %");
     Serial.println();
     
-    delay(2000);
+    //delay(2000);
+  }
 }
