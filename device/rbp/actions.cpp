@@ -123,7 +123,7 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 	cout << "POINT::6" << endl;
 	query_res_file.close();
 	cout << "POINT::7" << endl;
-	//system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
+	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
 	cout << "POINT::8" << endl;
 
 	return res;
