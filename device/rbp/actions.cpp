@@ -77,6 +77,7 @@ bool StartDataProcessor(void) {
 
 string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 	string query_variables = "?";
+	cout << "POINT::IN" << endl;
 	bool first = true;
 	for (auto it = variables.begin(); it != variables.end(); it++) {
 		if (first) {
@@ -86,6 +87,7 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 		}
 		query_variables += it->first + "=" + it->second;
 	}
+	cout << "POINT::1" << endl;
 	string script_path;
 	switch (query_type) {
 		case DATA_SEND:
@@ -101,19 +103,28 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 			script_path = APP_PARAMS["SERVER_SCRIPT_TEST_PATH"];
 			break;
 	}
+	cout << "POINT::2" << endl;
 	string query_href = APP_PARAMS["SERVER_PROTOCOL"] + "://" + APP_PARAMS["SERVER_HOST"] +
 		script_path + query_variables;
 	string query = "wget \"" +  query_href + "\" -O " + APP_PARAMS["QUERY_TEMP_FILE"] + " -q";
+	cout << "POINT::3" << endl;
+	cout << query << endl;
 	system(query.c_str());
+	cout << "POINT::4" << endl;
 
 	ifstream query_res_file(APP_PARAMS["QUERY_TEMP_FILE"].c_str());
 	char ch;
 	string res = "";
+	cout << "POINT::5" << endl;
 	while((ch = query_res_file.get()) != EOF) {
 		res += ch;
+		cout << ch << endl;
 	}
+	cout << "POINT::6" << endl;
 	query_res_file.close();
+	cout << "POINT::7" << endl;
 	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
+	cout << "POINT::8" << endl;
 
 	return res;
 }
