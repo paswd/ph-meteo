@@ -16,7 +16,7 @@ using namespace std;
 //RuntimeParams PARAMS;
 
 DataProcessor::DataProcessor(void) {
-	this->ErrNum = 0;
+	this->ErrorNum = 0;
 	if (!this->Start()) {
 		cout << MESSAGE_FATAL_ERROR << endl;
 		this->ErrorNum = 1;
@@ -130,7 +130,7 @@ string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType qu
 }
 
 bool DataProcessor::IsStarted(void) {
-	if (this->ErrNum == 0) {
+	if (this->ErrorNum == 0) {
 		return true;
 	}
 	return false;
