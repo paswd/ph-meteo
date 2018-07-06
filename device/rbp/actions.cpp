@@ -121,7 +121,7 @@ string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType qu
 	string res = "";
 	while (query_res_file.get(ch)) {
 		res += ch;
-		cout << ch << endl;
+		//cout << ch << endl;
 	}
 	query_res_file.close();
 	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
