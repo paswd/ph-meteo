@@ -116,7 +116,7 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 	char ch;
 	string res = "";
 	cout << "POINT::5" << endl;
-	while((ch = query_res_file.get()) != EOF) {
+	while (query_res_file.get(ch)) {
 		res += ch;
 		cout << ch << endl;
 	}
