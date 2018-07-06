@@ -113,7 +113,7 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 		res += ch;
 	}
 	query_res_file.close();
-	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str())
+	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
 
 	return res;
 }
