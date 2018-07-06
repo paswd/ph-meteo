@@ -9,13 +9,23 @@
 #include <unistd.h>
 #include <wiringSerial.h>
 
-#define APP_PARAMS PARAMS.AppParams
+#define APP_PARAMS this->Params.AppParams
 
 using namespace std;
 
-RuntimeParams PARAMS;
+//RuntimeParams PARAMS;
 
-bool ReadParams(void) {
+DataProcessor::DataProcessor(void) {
+	this->ErrNum = 0;
+	if (!this->Start()) {
+		cout << MESSAGE_FATAL_ERROR << endl;
+		this->ErrorNum = 1;
+	}
+}
+
+DataProcessor::~DataProcessor(void) {}
+
+bool DataProcessor::ReadParams(void) {
 	ifstream fin("init.conf");
 	if (!fin.is_open()) {
 		return false;
@@ -31,18 +41,18 @@ bool ReadParams(void) {
 		}
 		is_first_param = !is_first_param;
 	}
-	PARAMS.CurrentTimeoutMinutes = (size_t) StringToNum(APP_PARAMS["TIMEOUT_DEFAULT_MINUTES"]);
+	this->Params.CurrentTimeoutMinutes = (size_t) StringToNum(APP_PARAMS["TIMEOUT_DEFAULT_MINUTES"]);
 	return true;
 }
-void PrintParams(void) {
+void DataProcessor::PrintParams(void) {
 	for (auto it = APP_PARAMS.begin(); it != APP_PARAMS.end(); it++) {
     	cout << it->first << " : "<< it->second << endl;
 	}
 }
 
-bool StartDataProcessor(void) {
+bool DataProcessor::Start(void) {
 	cout << "Reading config... ";
-	if (ReadParams()) {
+	if (this->ReadParams()) {
 		cout << COLOR_GREEN << "[OK]" << COLOR_RESET << endl;
 	} else {
 		cout << COLOR_RED << "[FAILED]" << COLOR_RESET << endl;
@@ -52,20 +62,20 @@ bool StartDataProcessor(void) {
 
 	cout << endl << "Finding arduino" << endl;
 	string base = "/dev/ttyACM";
-	PARAMS.Arduino = -1;
-	for (int i = 0; PARAMS.Arduino == -1 && i < 10; i++) {
+	this->Params.Arduino = -1;
+	for (int i = 0; this->Params.Arduino == -1 && i < 10; i++) {
 		char tmp = i + '0';
 		string addr = base + tmp;
 		cout << "Connecting " << addr << "... ";
-		PARAMS.Arduino = serialOpen(addr.c_str(), 9600);
-		if (PARAMS.Arduino != -1) {
+		this->Params.Arduino = serialOpen(addr.c_str(), 9600);
+		if (this->Params.Arduino != -1) {
 			cout << COLOR_GREEN << "[OK]" << COLOR_RESET;
 		} else {
 			cout << COLOR_RED << "[FAILED]" << COLOR_RESET;
 		}
 		cout << endl;
 	}
-	if (PARAMS.Arduino == -1) {
+	if (this->Params.Arduino == -1) {
 		cout << COLOR_RED << "Arduino connection error" << COLOR_RESET << endl;
 
 		return false;
@@ -75,7 +85,7 @@ bool StartDataProcessor(void) {
 	return true;
 }
 
-string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
+string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType query_type) {
 	string query_variables = "?";
 	bool first = true;
 	for (auto it = variables.begin(); it != variables.end(); it++) {
@@ -115,6 +125,13 @@ string ServerGetQuery(map<string, string> variables, GetQueryType query_type) {
 	}
 	query_res_file.close();
 	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
-	
+
 	return res;
+}
+
+bool DataProcessor::IsStarted(void) {
+	if (this->ErrNum == 0) {
+		return true;
+	}
+	return false;
 }

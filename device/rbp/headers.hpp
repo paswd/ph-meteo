@@ -29,7 +29,7 @@ public:
 	int Arduino;
 };
 
-extern RuntimeParams PARAMS;
+//extern RuntimeParams PARAMS;
 
 typedef enum {
 	DATA_SEND,

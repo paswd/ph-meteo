@@ -7,15 +7,19 @@
 using namespace std;
 
 int main(void) {
-	if (!StartDataProcessor()) {
+	/*if (!StartDataProcessor()) {
 		cout << MESSAGE_FATAL_ERROR << endl;
+		return 0;
+	}*/
+	DataProcessor dp;
+	if (!dp.IsStarted()) {
 		return 0;
 	}
 
 	map <string, string> testparams;
 	testparams.insert(pair <string, string>("var1", "value1"));
 	testparams.insert(pair <string, string>("var2", "value2"));
-	string res = ServerGetQuery(testparams, TEST);
+	string res = dp.ServerQuery(testparams, TEST);
 	cout << res << endl;
 
 	return 0;

@@ -7,9 +7,19 @@
 #include <unistd.h>
 #include "headers.hpp"
 
-bool ReadParams(void);
-void PrintParams(void);
-bool StartDataProcessor(void);
-std::string ServerGetQuery(std::map<std::string, std::string> params, GetQueryType query_type);
+class DataProcessor {
+private:
+	RuntimeParams Params;
+	int ErrorNum;
+public:
+	DataProcessor(void);
+	~DataProcessor(void);
+
+	bool ReadParams(void);
+	void PrintParams(void);
+	bool Start(void);
+	std::string ServerQuery(std::map<std::string, std::string> params, GetQueryType query_type);
+	bool IsStarted(void);
+};
 
 #endif
