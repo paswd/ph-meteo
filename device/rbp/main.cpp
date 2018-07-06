@@ -12,5 +12,11 @@ int main(void) {
 		return 0;
 	}
 
+	map <string, string> testparams;
+	testparams.insert(pair <string, string>("var1", "value1"));
+	testparams.insert(pair <string, string>("var2", "value2"));
+	string res = ServerGetQuery(testparams, TEST);
+	cout << res << endl;
+
 	return 0;
 }

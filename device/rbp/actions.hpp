@@ -10,5 +10,6 @@
 bool ReadParams(void);
 void PrintParams(void);
 bool StartDataProcessor(void);
+std::string ServerGetQuery(std::map<std::string, std::string> params, GetQueryType query_type);
 
 #endif

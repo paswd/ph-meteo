@@ -31,4 +31,11 @@ public:
 
 extern RuntimeParams PARAMS;
 
+typedef enum {
+	DATA_SEND,
+	REG,
+	CHECK,
+	TEST
+} GetQueryType;
+
 #endif
