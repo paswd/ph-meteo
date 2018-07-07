@@ -60,7 +60,7 @@ bool DataProcessor::Start(void) {
 		return false;
 	}
 
-	
+	this->Params.DeviceIdHash = sha1_hash(APP_PARAMS["DEVICE_ID"]);
 	//PrintParams();
 
 	cout << endl << "Finding arduino" << endl;
@@ -156,5 +156,9 @@ bool DataProcessor::Register(void) {
 }
 
 void DataProcessor::InitServerConnection(void) {
-
+	Dict testquery;
+	testquery.insert(DictUnit("type", "test"));
+	testquery.insert(DictUnit("var", this->Params.DeviceIdHash));
+	string res = this->ServerQuery(testquery);
+	cout << res << endl;
 }

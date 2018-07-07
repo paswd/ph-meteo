@@ -14,7 +14,7 @@ int main(void) {
 
 	dp.InitServerConnection();
 
-	cout << sha1_hash("test");
+	//cout << sha1_hash("test");
 
 	return 0;
 }
