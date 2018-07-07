@@ -11,7 +11,9 @@ int main(void) {
 	if (!dp.IsCorrect()) {
 		return 0;
 	}
-	dp.InitServerConnection();
+	if (!dp.InitServerConnection()) {
+		return 0;
+	}
 	while (dp.Timer());
 
 	return 0;

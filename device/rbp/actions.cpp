@@ -196,10 +196,12 @@ bool DataProcessor::Register(void) {
 	return res == 0 ? true : false;
 }
 
-void DataProcessor::InitServerConnection(void) {
-	if (!this->Register()) {
-		return;
+bool DataProcessor::InitServerConnection(void) {
+	if (this->Register()) {
+		cout << COLOR_GREEN << "Device has been successfully connected to server" << endl;
+		return true;
 	}
+	return false;
 }
 
 bool DataProcessor::Timer(void) {
@@ -249,7 +251,7 @@ bool DataProcessor::ProcessData(void) {
 
 		case 0:
 			cout << COLOR_CYAN << "Temperature:\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
-			cout << COLOR_CYAN << "Pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
+			cout << COLOR_CYAN << "Pressure:\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
 			cout << COLOR_CYAN << "Altitude:\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
 			cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl;
 			cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl;

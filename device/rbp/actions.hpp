@@ -20,21 +20,18 @@ public:
 
 class DataProcessor {
 private:
-	//RuntimeParams Params;
 	int ErrorNum;
 
-	std::map <std::string, std::string> AppParams;
+	Dict AppParams;
 	size_t CurrentTimeoutMinutes;
 	int Arduino;
 	std::string PublicKey;
 	std::string DeviceIdHash;
-	//time_t TimeBegin;
 	Weather CurrentWeather;
-	//char ArdBf[OUTPUT_MESSAGE_SIZE];
 
 	bool ReadParams(void);
 	bool Start(void);
-	std::string ServerQuery(std::map<std::string, std::string> params);
+	std::string ServerQuery(Dict params);
 	void GetPubKey(void);
 	long long Check(void);
 	bool Register(void);
@@ -46,7 +43,7 @@ public:
 
 	void PrintParams(void);
 	bool IsCorrect(void);
-	void InitServerConnection(void);
+	bool InitServerConnection(void);
 	bool Timer(void);
 };
 
