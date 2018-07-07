@@ -258,10 +258,10 @@ void DataProcessor::ProcessData(void) {
 
 	switch (this->ErrorNum) {
 		case 0:
-			cout << COLOR_BLUE << "Temperature:\t\t\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
-			cout << COLOR_BLUE << "Atmpsphere pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
-			cout << COLOR_BLUE << "Altitude:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
-			cout << COLOR_BLUE << "Humidity:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
+			cout << COLOR_CYAN << "Temperature:\t\t\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
+			cout << COLOR_CYAN << "Atmpsphere pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
+			cout << COLOR_CYAN << "Altitude:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
+			cout << COLOR_CYAN << "Humidity:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
 			break;
 
 		case 1:
