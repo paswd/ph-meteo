@@ -25,8 +25,8 @@ char CharToHex(unsigned char ch) {
 
 string sha1_hash(string str) {
 	unsigned char hash[SHA1_HASH_LEN];
-	char *str_tmp = NULL;
-	strcpy(str_tmp, str.c_str());
+	const char *str_tmp = str.c_str();
+	//strcpy(str_tmp, str.c_str());
 	SHA1((unsigned char *)&str_tmp, str.size() - 1, hash);
 	//return string(hash);
 	string res = "";
