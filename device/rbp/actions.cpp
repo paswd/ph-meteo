@@ -157,6 +157,7 @@ long long DataProcessor::Check(void) {
 	query_params.insert(DictUnit("type", "check"));
 	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
 	long long res = StringToNum(this->ServerQuery(query_params));
+	
 	if (res > 0) {
 		this->CurrentTimeoutMinutes = res;
 	}
@@ -217,9 +218,10 @@ bool DataProcessor::ProcessData(void) {
 	this->Check();
 	serialPutchar(this->Arduino, '1');
 	sleep(1);
-	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
+	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;
+	cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl;
 	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
-		cout << COLOR_RED << "No available data. Repeat..." << COLOR_RESET << endl;
+		cout << COLOR_RED << "No available data. Repeat..." << COLOR_RESET << endl << endl;
 		return false;
 	}
 	char bf[INPUT_MESSAGE_SIZE];
