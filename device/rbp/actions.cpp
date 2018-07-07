@@ -276,20 +276,21 @@ void DataProcessor::ProcessData(void) {
 	//outbf[1] = '\0';
 	//serialPrintf(this->Arduino, outbf);
 	serialPutchar(this->Arduino, '1');
-	cout << "IN: ";
+	cout << "IN: " << endl;
 	sleep(3);
-	cout << serialDataAvail(this->Arduino);
+	//cout << serialDataAvail(this->Arduino);
+	while (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE);
 	char bf[INPUT_MESSAGE_SIZE];
-	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;
+	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
 	//int avail;
 	/*while ((avail = serialDataAvail(this->Arduino)) < (int) INPUT_MESSAGE_SIZE) {
 		cout << "WAIT: " << avail << endl;
 	}*/
-	/*for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
+	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
 		cout << (int) bf[i] << " ";
 	}
-	cout << endl;*/
+	cout << endl;
 	this->CurrentWeather.GetValues(bf);
 
 
