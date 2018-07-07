@@ -245,7 +245,7 @@ void DataProcessor::ProcessData(void) {
 		cout << bf[i];
 	}
 	cout << endl;
-	this->CurrentWeather.GetValues();
+	this->CurrentWeather.GetValues(bf);
 
 	Dict query_params;
 	query_params.insert(DictUnit("type", "data"));
