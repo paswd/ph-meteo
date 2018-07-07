@@ -96,8 +96,8 @@ bool DataProcessor::Start(void) {
 	}
 
 	cout << endl << "Finding arduino" << endl;
-	//string base = "/dev/ttyACM";
-	string base = "/dev/ttyAMA";
+	string base = "/dev/ttyACM";
+	//string base = "/dev/ttyAMA";
 	this->Arduino = -1;
 	for (int i = 0; this->Arduino == -1 && i < 10; i++) {
 		char tmp = i + '0';
