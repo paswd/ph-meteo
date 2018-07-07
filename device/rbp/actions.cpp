@@ -201,9 +201,7 @@ void DataProcessor::InitServerConnection(void) {
 }
 
 bool DataProcessor::Timer(void) {
-	cout << "DEBUG::PROCDATA" << endl;
 	bool got_data = this->ProcessData();
-	cout << "DEBUG::ISCORRECT" << endl;
 	if (!this->IsCorrect()) {
 		return false;
 	}
@@ -218,7 +216,6 @@ bool DataProcessor::Timer(void) {
 bool DataProcessor::ProcessData(void) {
 	this->Check();
 	serialPutchar(this->Arduino, '1');
-	cout << "IN: " << endl;
 	sleep(1);
 	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
 	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
