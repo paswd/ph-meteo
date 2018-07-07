@@ -26,7 +26,7 @@ void Weather::GetValues(char *bf) {
 	char *TempArr	= bf;
 	char *PressArr	= TempArr	+ TEMP_ARR_LEN;
 	char *AltArr	= PressArr	+ PRESS_ARR_LEN;
-	char *HumPos	= AltArr	+ ALT_ARR_LEN;
+	char *HumArr	= AltArr	+ ALT_ARR_LEN;
 
 	this->Temperature	= (int) StringToNum(TempArr,	TEMP_ARR_LEN);
 	this->APressure		= (int) StringToNum(PressArr,	PRESS_ARR_LEN);
