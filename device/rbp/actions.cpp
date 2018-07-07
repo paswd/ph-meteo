@@ -240,15 +240,19 @@ bool DataProcessor::ProcessData(void) {
 	this->ErrorNum = StringToNum(this->ServerQuery(query_params));
 
 	switch (this->ErrorNum) {
+		case 1:
+			cout << COLOR_RED << "The station was not found" << COLOR_RESET << endl;
+			if (!this->Register()) {
+				this->ErrorNum = 1;
+				break;
+			}
+
 		case 0:
 			cout << COLOR_CYAN << "Temperature:\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
 			cout << COLOR_CYAN << "Pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
 			cout << COLOR_CYAN << "Altitude:\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
-			cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
-			break;
-
-		case 1:
-			cout << COLOR_RED << "The station was not found" << COLOR_RESET << endl;
+			cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl;
+			cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl;
 			break;
 
 		case 2:
@@ -259,7 +263,6 @@ bool DataProcessor::ProcessData(void) {
 			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
 			break;
 	}
-	cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl << endl;
 	return true;
 
 }
