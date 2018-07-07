@@ -31,6 +31,7 @@ string sha1_hash(string str) {
 		str_tmp[i] = str[i];
 		cout << (int) str[i] << ":" << str[i] << endl;
 	}
+	cout << "Size: " << sizeof(str_tmp) << endl;
 	//strcpy(str_tmp, str.c_str());
 	SHA1((unsigned char *)str_tmp, sizeof(str_tmp) - 1, hash);
 	delete [] str_tmp;
