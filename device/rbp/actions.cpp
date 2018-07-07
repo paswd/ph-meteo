@@ -259,7 +259,7 @@ bool DataProcessor::ProcessData(void) {
 			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
 			break;
 	}
-	cout << endl << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl << endl;
+	cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl << endl;
 	return true;
 
 }
