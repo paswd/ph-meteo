@@ -46,7 +46,7 @@ public:
 	void PrintParams(void);
 	bool IsCorrect(void);
 	void InitServerConnection(void);
-	void Timer(void);
+	bool Timer(void);
 };
 
 #endif
