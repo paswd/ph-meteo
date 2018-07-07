@@ -274,7 +274,7 @@ void DataProcessor::ProcessData(void) {
 	char outbf[OUTPUT_MESSAGE_SIZE + 1];
 	outbf[0] = 1;
 	outbf[1] = '\0';
-	serialPrintf(fd, outbf);
+	serialPrintf(this->Arduino, outbf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	sleep(3);
