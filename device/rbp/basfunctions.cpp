@@ -18,7 +18,7 @@ long long StringToNum(string str) {
 
 string sha1_hash(string str) {
 	unsigned char primary_hash[SHA1_HASH_LEN];
-	cout << str << endl;
+	//cout << str << endl;
 	//const char *str_tmp = str.c_str();
 	unsigned char *str_tmp = new unsigned char[str.size() + 1];
 	for (size_t i = 0; i < str.size(); i++) {
@@ -33,13 +33,13 @@ string sha1_hash(string str) {
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
     	sprintf(&hash[i*2], "%02x", (unsigned int)primary_hash[i]);
 	}
-	cout << hash << endl;
+	//cout << hash << endl;
 	string res = "";
 	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
-		cout << (char) hash[i] << ":" << (int) hash[i] << " ";
+		//cout << (char) hash[i] << ":" << (int) hash[i] << " ";
 		res += (char) hash[i];
 	}
-	cout << endl;
+	//cout << endl;
 	return res;
 }
 
