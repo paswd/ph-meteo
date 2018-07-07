@@ -40,7 +40,7 @@ string sha1_hash(string str) {
 	unsigned char str_tmp1[] = "eDCvyH1MTwc1t8AX";
 	//cout << (int) str_tmp[16] << endl;
 	cout << "Size4: " << sizeof(str_tmp1) << endl;
-	SHA1((unsigned char *)str_tmp, str.size() - 1, hash);
+	SHA1((unsigned char *)str_tmp, str.size(), hash);
 	delete [] str_tmp;
 	//return string(hash);
 	char mdString[SHA1_HASH_LEN*2+1];
