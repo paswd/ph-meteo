@@ -247,13 +247,14 @@ void DataProcessor::ProcessData(void) {
 	cout << endl;
 	this->CurrentWeather.GetValues(bf);
 
+
 	Dict query_params;
 	query_params.insert(DictUnit("type", "data"));
 	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
-	query_params.insert(DictUnit("temperature", this->CurrentWeather.Temperature));
-	query_params.insert(DictUnit("atmosphere_pressure", this->CurrentWeather.APressure));
-	query_params.insert(DictUnit("altitude", this->CurrentWeather.Altitude));
-	query_params.insert(DictUnit("humidity", this->CurrentWeather.Humidity));
+	query_params.insert(DictUnit("temperature", NumToString(this->CurrentWeather.Temperature)));
+	query_params.insert(DictUnit("atmosphere_pressure", NumToString(this->CurrentWeather.APressure)));
+	query_params.insert(DictUnit("altitude", NumToString(this->CurrentWeather.Altitude)));
+	query_params.insert(DictUnit("humidity", NumToString(this->CurrentWeather.Humidity)));
 	this->ErrorNum = StringToNum(this->ServerQuery(query_params));
 
 	switch (this->ErrorNum) {

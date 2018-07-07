@@ -31,6 +31,12 @@ long long StringToNum(char *str, size_t len) {
 	return res;
 }
 
+string NumToSting(long long num) {
+	stringstream ss;
+	ss << num;
+	return ss.str();
+}
+
 long long DoubleToNum(double val) {
   long long res = (long long) val;
   long long md = (long long) (val * 10);
