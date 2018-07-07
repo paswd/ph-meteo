@@ -88,12 +88,12 @@ bool DataProcessor::Start(void) {
 	this->DeviceIdHash = sha1_hash(this->AppParams["DEVICE_ID"]);
 	//PrintParams();
 
-	if (wiringPiSetup() != -1) {
+	/*if (wiringPiSetup() != -1) {
 		cout << COLOR_GREEN << "WiringPi successfully started" << COLOR_RESET << endl;
 	} else {
 		cout << COLOR_RED << "Unable to start wiringPi" << COLOR_RESET << endl;
 		return false;
-	}
+	}*/
 
 	cout << endl << "Finding arduino" << endl;
 	string base = "/dev/ttyACM";
@@ -116,7 +116,7 @@ bool DataProcessor::Start(void) {
 
 		return false;
 	}
-	serialFlush(this->Arduino);
+	//serialFlush(this->Arduino);
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
@@ -260,7 +260,7 @@ void DataProcessor::ProcessData(void) {
 	cout << this->Arduino << endl;
 	//serialPutchar(this->Arduino, '1');
 	char out_bf[OUTPUT_MESSAGE_SIZE + 1];
-	out_bf[0] = '1';
+	out_bf[0] = 1;
 	out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
 	serialPrintf(this->Arduino, out_bf);
 	//serialPutchar(this->Arduino, '1');
