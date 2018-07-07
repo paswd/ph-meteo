@@ -11,7 +11,7 @@
 class DataProcessor {
 private:
 	//RuntimeParams Params;
-	//int ErrorNum;
+	int ErrorNum;
 
 	std::map <std::string, std::string> AppParams;
 	size_t CurrentTimeoutMinutes;
