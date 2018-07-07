@@ -184,10 +184,10 @@ long long DataProcessor::Check(void) {
 bool DataProcessor::Register(void) {
 	cout << "Checking registration... ";
 	if (this->Check() != -1) {
-		cout << COLOR_GREEN << "[REGISTERED]" << endl;
+		cout << COLOR_GREEN << "[REGISTERED]" << COLOR_RESET << endl;
 		return true;
 	}
-	cout << COLOR_YELLOW << "[NOT REGISTERED]" << endl;
+	cout << COLOR_YELLOW << "[NOT REGISTERED]" << COLOR_RESET << endl;
 	cout << "Registering... ";
 	Dict query_params;
 	query_params.insert(DictUnit("type", "registration"));
@@ -240,8 +240,11 @@ bool DataProcessor::Timer(void) {
 }
 
 void DataProcessor::ProcessData(void) {
+	cout << "S1" << endl;
 	this->Check();
+	cout << "S2" << endl;
 	char bf[INPUT_MESSAGE_SIZE];
+	cout << "S3" << endl;
 	serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
