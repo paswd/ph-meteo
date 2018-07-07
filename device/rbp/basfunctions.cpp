@@ -33,7 +33,7 @@ string sha1_hash(string str) {
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
     	sprintf(&mdString[i*2], "%02x", (unsigned int)hash[i]);
 	}
-	cout << mdstring << endl;
+	cout << mdString << endl;
 	string res = "";
 	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
 		//cout << (int) hash[i] << " ";
