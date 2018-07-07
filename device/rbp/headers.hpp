@@ -31,6 +31,7 @@ public:
 	size_t CurrentTimeoutMinutes;
 	int Arduino;
 	std::string PublicKey;
+	std::string DeficeIdHash;
 };
 
 //extern RuntimeParams PARAMS;

@@ -11,16 +11,21 @@ class DataProcessor {
 private:
 	RuntimeParams Params;
 	int ErrorNum;
+
+	bool ReadParams(void);
+	bool Start(void);
+	std::string ServerQuery(std::map<std::string, std::string> params);
+	void GetPubKey(void);
+	bool CheckRegistration(void);
+	bool Register(void);
+
 public:
 	DataProcessor(void);
 	~DataProcessor(void);
 
-	bool ReadParams(void);
 	void PrintParams(void);
-	bool Start(void);
-	std::string ServerQuery(std::map<std::string, std::string> params);
 	bool IsStarted(void);
-	void GetPubKey(void);
+	void InitServerConnection(void);
 };
 
 #endif

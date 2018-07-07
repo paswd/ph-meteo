@@ -59,6 +59,8 @@ bool DataProcessor::Start(void) {
 		cout << COLOR_RED << "[FAILED]" << COLOR_RESET << endl;
 		return false;
 	}
+
+	
 	//PrintParams();
 
 	cout << endl << "Finding arduino" << endl;
@@ -143,4 +145,17 @@ void DataProcessor::GetPubKey(void) {
 	ofstream fout(APP_PARAMS["PUBLIC_KEY_FILE"].c_str(), ios::out);
 	fout << pubkey << endl;
 	fout.close();
+}
+
+bool DataProcessor::CheckRegistration(void) {
+
+}
+
+bool DataProcessor::Register(void) {
+
+}
+
+void DataProcessor::InitServerConnection(void) {
+
+
 }
