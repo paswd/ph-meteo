@@ -120,6 +120,7 @@ bool DataProcessor::Start(void) {
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
+	this->ArdBf[OUTPUT_MESSAGE_SIZE] = '\n';
 	sleep(1);
 	return true;
 }
@@ -259,10 +260,11 @@ void DataProcessor::ProcessData(void) {
 	cout << "S3" << endl;
 	cout << this->Arduino << endl;
 	//serialPutchar(this->Arduino, '1');
-	char out_bf[OUTPUT_MESSAGE_SIZE + 1];
-	out_bf[0] = 1;
-	out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
-	serialPrintf(this->Arduino, out_bf);
+	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
+	//out_bf[0] = 1;
+	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
+	this->ArdBf[0] = 1;
+	serialPrintf(this->Arduino, this->ArdBf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	char bf[INPUT_MESSAGE_SIZE];
