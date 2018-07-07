@@ -84,7 +84,7 @@ bool DataProcessor::Start(void) {
 		return false;
 	}
 	cout << "Arduino has been found" << endl;
-	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl;
+	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
 	return true;
 }
 
@@ -165,7 +165,7 @@ bool DataProcessor::Register(void) {
 		return true;
 	}
 	cout << COLOR_YELLOW << "[NOT REGISTERED]" << endl;
-	cout << " Registering... ";
+	cout << "Registering... ";
 	Dict query_params;
 	query_params.insert(DictUnit("type", "registration"));
 	query_params.insert(DictUnit("unic_id", this->Params.DeviceIdHash));
