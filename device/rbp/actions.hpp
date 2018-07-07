@@ -5,12 +5,20 @@
 #include <string>
 #include <string.h>
 #include <unistd.h>
+#include <ctime>
 #include "headers.hpp"
 
 class DataProcessor {
 private:
-	RuntimeParams Params;
-	int ErrorNum;
+	//RuntimeParams Params;
+	//int ErrorNum;
+
+	std::map <std::string, std::string> AppParams;
+	size_t CurrentTimeoutMinutes;
+	int Arduino;
+	std::string PublicKey;
+	std::string DeviceIdHash;
+	time_t TimeBegin;
 
 	bool ReadParams(void);
 	bool Start(void);

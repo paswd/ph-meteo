@@ -8,9 +8,10 @@
 #include <string>
 #include <string.h>
 #include <unistd.h>
+#include <ctime>
 #include <wiringSerial.h>
 
-#define APP_PARAMS this->Params.AppParams
+//#define APP_PARAMS this->AppParams
 
 using namespace std;
 
@@ -38,15 +39,15 @@ bool DataProcessor::ReadParams(void) {
 		if (is_first_param) {
 			name_tmp = tmp;
 		} else {
-			APP_PARAMS.insert(pair <string, string>(name_tmp, tmp));
+			this->AppParams.insert(pair <string, string>(name_tmp, tmp));
 		}
 		is_first_param = !is_first_param;
 	}
-	this->Params.CurrentTimeoutMinutes = (size_t) StringToNum(APP_PARAMS["TIMEOUT_DEFAULT_MINUTES"]);
+	this->CurrentTimeoutMinutes = (size_t) StringToNum(this->AppParams["TIMEOUT_DEFAULT_MINUTES"]);
 	return true;
 }
 void DataProcessor::PrintParams(void) {
-	for (auto it = APP_PARAMS.begin(); it != APP_PARAMS.end(); it++) {
+	for (auto it = this->AppParams.begin(); it != this->AppParams.end(); it++) {
     	cout << it->first << " : "<< it->second << endl;
 	}
 }
@@ -60,25 +61,25 @@ bool DataProcessor::Start(void) {
 		return false;
 	}
 
-	this->Params.DeviceIdHash = sha1_hash(APP_PARAMS["DEVICE_ID"]);
+	this->DeviceIdHash = sha1_hash(this->AppParams["DEVICE_ID"]);
 	//PrintParams();
 
 	cout << endl << "Finding arduino" << endl;
 	string base = "/dev/ttyACM";
-	this->Params.Arduino = -1;
-	for (int i = 0; this->Params.Arduino == -1 && i < 10; i++) {
+	this->Arduino = -1;
+	for (int i = 0; this->Arduino == -1 && i < 10; i++) {
 		char tmp = i + '0';
 		string addr = base + tmp;
 		cout << "Connecting " << addr << "... ";
-		this->Params.Arduino = serialOpen(addr.c_str(), 9600);
-		if (this->Params.Arduino != -1) {
+		this->Arduino = serialOpen(addr.c_str(), 9600);
+		if (this->Arduino != -1) {
 			cout << COLOR_GREEN << "[OK]" << COLOR_RESET;
 		} else {
 			cout << COLOR_RED << "[FAILED]" << COLOR_RESET;
 		}
 		cout << endl;
 	}
-	if (this->Params.Arduino == -1) {
+	if (this->Arduino == -1) {
 		cout << COLOR_RED << "Arduino connection error" << COLOR_RESET << endl;
 
 		return false;
@@ -102,24 +103,24 @@ string DataProcessor::ServerQuery(Dict variables) {
 	/*string script_path;
 	switch (query_type) {
 		case DATA_SEND:
-			script_path = APP_PARAMS["SERVER_SCRIPT_DATA_PATH"];
+			script_path = this->AppParams["SERVER_SCRIPT_DATA_PATH"];
 			break;
 		case REG:
-			script_path = APP_PARAMS["SERVER_SCRIPT_REG_PATH"];
+			script_path = this->AppParams["SERVER_SCRIPT_REG_PATH"];
 			break;
 		case CHECK:
-			script_path = APP_PARAMS["SERVER_SCRIPT_CHECK_PATH"];
+			script_path = this->AppParams["SERVER_SCRIPT_CHECK_PATH"];
 			break;
 		case TEST:
-			script_path = APP_PARAMS["SERVER_SCRIPT_TEST_PATH"];
+			script_path = this->AppParams["SERVER_SCRIPT_TEST_PATH"];
 			break;
 	}*/
-	string query_href = APP_PARAMS["SERVER_PROTOCOL"] + "://" + APP_PARAMS["SERVER_HOST"] +
-		APP_PARAMS["SERVER_SCRIPT_PATH"] + query_variables;
-	string query = "wget \"" +  query_href + "\" -O " + APP_PARAMS["QUERY_TEMP_FILE"] + " -q";
+	string query_href = this->AppParams["SERVER_PROTOCOL"] + "://" + this->AppParams["SERVER_HOST"] +
+		this->AppParams["SERVER_SCRIPT_PATH"] + query_variables;
+	string query = "wget \"" +  query_href + "\" -O " + this->AppParams["QUERY_TEMP_FILE"] + " -q";
 	system(query.c_str());
 
-	ifstream query_res_file(APP_PARAMS["QUERY_TEMP_FILE"].c_str());
+	ifstream query_res_file(this->AppParams["QUERY_TEMP_FILE"].c_str());
 	char ch;
 	string res = "";
 	while (query_res_file.get(ch)) {
@@ -127,7 +128,7 @@ string DataProcessor::ServerQuery(Dict variables) {
 		//cout << ch << endl;
 	}
 	query_res_file.close();
-	system(("rm " + APP_PARAMS["QUERY_TEMP_FILE"]).c_str());
+	system(("rm " + this->AppParams["QUERY_TEMP_FILE"]).c_str());
 
 	return res;
 }
@@ -142,7 +143,7 @@ void DataProcessor::GetPubKey(void) {
 	Dict query_params;
 	query_params.insert(DictUnit("type", "getpubkey"));
 	string pubkey = this->ServerQuery(query_params);
-	ofstream fout(APP_PARAMS["PUBLIC_KEY_FILE"].c_str(), ios::out);
+	ofstream fout(this->AppParams["PUBLIC_KEY_FILE"].c_str(), ios::out);
 	fout << pubkey << endl;
 	fout.close();
 }
@@ -150,10 +151,10 @@ void DataProcessor::GetPubKey(void) {
 long long DataProcessor::CheckRegistration(void) {
 	Dict query_params;
 	query_params.insert(DictUnit("type", "check"));
-	query_params.insert(DictUnit("unic_id", this->Params.DeviceIdHash));
+	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
 	long long res = StringToNum(this->ServerQuery(query_params));
 	if (res > 0) {
-		this->Params.CurrentTimeoutMinutes = res;
+		this->CurrentTimeoutMinutes = res;
 	}
 	return res;
 }
@@ -168,7 +169,7 @@ bool DataProcessor::Register(void) {
 	cout << "Registering... ";
 	Dict query_params;
 	query_params.insert(DictUnit("type", "registration"));
-	query_params.insert(DictUnit("unic_id", this->Params.DeviceIdHash));
+	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
 	long long res = StringToNum(this->ServerQuery(query_params));
 	this->ErrorNum = res;
 	switch (res) {
@@ -195,7 +196,7 @@ void DataProcessor::InitServerConnection(void) {
 	}
 	/*Dict testquery;
 	testquery.insert(DictUnit("type", "test"));
-	testquery.insert(DictUnit("var", this->Params.DeviceIdHash));
+	testquery.insert(DictUnit("var", this->DeviceIdHash));
 	string res = this->ServerQuery(testquery);
 	cout << res << endl;*/
 }
