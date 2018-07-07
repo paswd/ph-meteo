@@ -115,7 +115,7 @@ bool DataProcessor::Start(void) {
 	if (this->Arduino == -1) {
 		cout << COLOR_RED << "Arduino connection error" << COLOR_RESET << endl;
 
-		return false;
+		//return false;
 	}
 	//serialFlush(this->Arduino);
 
