@@ -264,10 +264,13 @@ void DataProcessor::ProcessData(void) {
 	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	//out_bf[0] = 1;
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
-	this->ArdBf[0] = 1;
-	serialPrintf(this->Arduino, this->ArdBf);
+	//this->ArdBf[0] = 1;
+	char bf[OUTPUT_MESSAGE_SIZE];
+	bf[0] = 1;
+	serialPrintf(this->Arduino, bf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
+	sleep(3);
 	char bf[INPUT_MESSAGE_SIZE];
 	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;
 	//int avail;

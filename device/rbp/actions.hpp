@@ -30,7 +30,7 @@ private:
 	std::string DeviceIdHash;
 	//time_t TimeBegin;
 	Weather CurrentWeather;
-	char ArdBf[OUTPUT_MESSAGE_SIZE];
+	//char ArdBf[OUTPUT_MESSAGE_SIZE];
 
 	bool ReadParams(void);
 	bool Start(void);
