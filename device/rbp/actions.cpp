@@ -240,7 +240,7 @@ void DataProcessor::InitServerConnection(void) {
 
 bool DataProcessor::Timer(void) {
 	cout << "DEBUG::PROCDATA" << endl;
-	this->ProcessData();
+	bool got_data = this->ProcessData();
 	cout << "DEBUG::ISCORRECT" << endl;
 	if (!this->IsCorrect()) {
 		return false;
@@ -251,11 +251,15 @@ bool DataProcessor::Timer(void) {
 	cout << "DEBUG::WAITBEGIN" << endl;
 	while (clock() < end_time);  // цикл ожидания времени
 	cout << "DEBUG::WAITEND" << endl;*/
-	sleep(this->CurrentTimeoutMinutes * 60);
+	if (got_data) {
+		sleep(this->CurrentTimeoutMinutes * 60);
+	} else {
+		sleep(1);
+	}
 	return true;
 }
 
-void DataProcessor::ProcessData(void) {
+bool DataProcessor::ProcessData(void) {
 	cout << "S1" << endl;
 	this->Check();
 	cout << "S2" << endl;
@@ -277,11 +281,14 @@ void DataProcessor::ProcessData(void) {
 	//serialPrintf(this->Arduino, outbf);
 	serialPutchar(this->Arduino, '1');
 	cout << "IN: " << endl;
-	sleep(3);
+	sleep(1);
 	//cout << serialDataAvail(this->Arduino);
-	while (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE);
-	char bf[INPUT_MESSAGE_SIZE];
+	//while (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE);
 	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
+	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
+		return false;
+	}
+	char bf[INPUT_MESSAGE_SIZE];
 	//int avail;
 	/*while ((avail = serialDataAvail(this->Arduino)) < (int) INPUT_MESSAGE_SIZE) {
 		cout << "WAIT: " << avail << endl;
@@ -323,5 +330,6 @@ void DataProcessor::ProcessData(void) {
 			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
 			break;
 	}
+	return true;
 
 }

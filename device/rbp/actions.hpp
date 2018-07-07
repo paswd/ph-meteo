@@ -38,7 +38,7 @@ private:
 	void GetPubKey(void);
 	long long Check(void);
 	bool Register(void);
-	void ProcessData(void);
+	bool ProcessData(void);
 
 public:
 	DataProcessor(void);
