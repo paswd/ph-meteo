@@ -244,6 +244,7 @@ void DataProcessor::ProcessData(void) {
 	this->Check();
 	cout << "S2" << endl;
 	cout << "S3" << endl;
+	cout << this->Arduino << endl;
 	//serialPutchar(this->Arduino, '1');
 	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	//out_bf[0] = '1';
