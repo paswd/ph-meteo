@@ -5,7 +5,7 @@
 
 long long StringToNum(std::string str);
 long long StringToNum(char *str, size_t len);
-std::string NumToSting(long long num);
+std::string NumToString(long long num);
 long long DoubleToNum(double val);
 std::string sha1_hash(std::string str);
 

@@ -31,7 +31,7 @@ long long StringToNum(char *str, size_t len) {
 	return res;
 }
 
-string NumToSting(long long num) {
+string NumToString(long long num) {
 	stringstream ss;
 	ss << num;
 	return ss.str();
