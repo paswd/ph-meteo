@@ -8,7 +8,7 @@ using namespace std;
 
 int main(void) {
 	DataProcessor dp;
-	if (!dp.IsStarted()) {
+	if (!dp.IsCorrect()) {
 		return 0;
 	}
 

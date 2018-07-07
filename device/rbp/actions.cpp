@@ -132,7 +132,7 @@ string DataProcessor::ServerQuery(Dict variables) {
 	return res;
 }
 
-bool DataProcessor::IsStarted(void) {
+bool DataProcessor::IsCorrect(void) {
 	if (this->ErrorNum == 0) {
 		return true;
 	}
@@ -147,18 +147,53 @@ void DataProcessor::GetPubKey(void) {
 	fout.close();
 }
 
-bool DataProcessor::CheckRegistration(void) {
-	return false;
+long long DataProcessor::CheckRegistration(void) {
+	Dict query_params;
+	query_params.insert(DictUnit("type", "check"));
+	query_params.insert(DictUnit("unic_id", this->Params.DeviceIdHash));
+	long long res = StringToNum(this->ServerQuery(query_params));
+	if (res > 0) {
+		this->Params.CurrentTimeoutMinutes = res;
+	}
+	return res;
 }
 
 bool DataProcessor::Register(void) {
-	return false;
+	if (this->CheckRegistration() != -1) {
+		return true;
+	}
+	cout << COLOR_YELLOW << "Your device has not been registered yet" << COLOR_RESET << endl;
+	cout << " Registering... ";
+	Dict query_params;
+	query_params.insert(DictUnit("type", "registration"));
+	query_params.insert(DictUnit("unic_id", this->Params.DeviceIdHash));
+	long long res = StringToNum(this->ServerQuery(query_params));
+	this->ErrorNum = res;
+	switch (res) {
+		case 0:
+			cout << COLOR_GREEN << "[OK]" << COLOR_RESET << endl;
+			break;
+		case 2:
+			cout << COLOR_RED << "[FAILED]" << endl;
+			cout << COLOR_RED << "Required parameters (unic_id) is missing" << COLOR_RESET << endl;
+			break;
+
+		default:
+			cout << COLOR_RED << "[FAILED]" << endl;
+			cout << COLOR_RED << "Unknown error occurred in registration" << COLOR_RESET << endl;
+			break;
+	}
+
+	return res == 0 ? true : false;
 }
 
 void DataProcessor::InitServerConnection(void) {
-	Dict testquery;
+	if (!this->Register()) {
+		return;
+	}
+	/*Dict testquery;
 	testquery.insert(DictUnit("type", "test"));
 	testquery.insert(DictUnit("var", this->Params.DeviceIdHash));
 	string res = this->ServerQuery(testquery);
-	cout << res << endl;
+	cout << res << endl;*/
 }

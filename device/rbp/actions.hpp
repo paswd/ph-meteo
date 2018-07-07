@@ -16,7 +16,7 @@ private:
 	bool Start(void);
 	std::string ServerQuery(std::map<std::string, std::string> params);
 	void GetPubKey(void);
-	bool CheckRegistration(void);
+	long long CheckRegistration(void);
 	bool Register(void);
 
 public:
@@ -24,7 +24,7 @@ public:
 	~DataProcessor(void);
 
 	void PrintParams(void);
-	bool IsStarted(void);
+	bool IsCorrect(void);
 	void InitServerConnection(void);
 };
 
