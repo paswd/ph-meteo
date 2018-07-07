@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const size_t SHA1_HASH_LEN = 40;
+const size_t SHA1_HASH_LEN = 20;
 
 long long StringToNum(string str) {
 	stringstream sstream(str);
