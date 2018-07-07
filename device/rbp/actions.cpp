@@ -245,7 +245,11 @@ void DataProcessor::ProcessData(void) {
 	cout << "S2" << endl;
 	char bf[INPUT_MESSAGE_SIZE];
 	cout << "S3" << endl;
-	serialPutchar(this->Arduino, '1');
+	//serialPutchar(this->Arduino, '1');
+	serialPrintf(this->Arduino, out_bf);
+	char out_bf[OUTPUT_MESSAGE_SIZE + 1];
+	out_bf[0] = '1';
+	out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
 	cout << "IN: ";
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
@@ -266,10 +270,10 @@ void DataProcessor::ProcessData(void) {
 
 	switch (this->ErrorNum) {
 		case 0:
-			cout << COLOR_CYAN << "Temperature:\t\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
-			cout << COLOR_CYAN << "Atmpsphere pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
-			cout << COLOR_CYAN << "Altitude:\t\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
-			cout << COLOR_CYAN << "Humidity:\t\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
+			cout << COLOR_CYAN << "Temperature:\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
+			cout << COLOR_CYAN << "Pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
+			cout << COLOR_CYAN << "Altitude:\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
+			cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
 			break;
 
 		case 1:

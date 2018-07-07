@@ -10,6 +10,7 @@ const size_t TEMP_ARR_LEN = 3;
 const size_t PRESS_ARR_LEN = 6;
 const size_t ALT_ARR_LEN = 4;
 const size_t HUM_ARR_LEN = 3;
+const size_t OUTPUT_MESSAGE_SIZE = 1;
 const size_t INPUT_MESSAGE_SIZE =
 	TEMP_ARR_LEN +
 	PRESS_ARR_LEN +
