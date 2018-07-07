@@ -87,7 +87,9 @@ bool DataProcessor::Start(void) {
 	this->DeviceIdHash = sha1_hash(this->AppParams["DEVICE_ID"]);
 	//PrintParams();
 
-	if (wiringPiSetup() == -1) {
+	if (wiringPiSetup() != -1) {
+		cout << COLOR_GREEN << "WiringPi successfully started" << COLOR_RESET << endl;
+	} else {
 		cout << COLOR_RED << "Unable to start wiringPi" << COLOR_RESET << endl;
 		return false;
 	}
@@ -256,7 +258,8 @@ void DataProcessor::ProcessData(void) {
 	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	//out_bf[0] = '1';
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
-	serialPrintf(this->Arduino, "1\n");
+	//serialPrintf(this->Arduino, "1\n");
+	serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	char bf[INPUT_MESSAGE_SIZE];
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
