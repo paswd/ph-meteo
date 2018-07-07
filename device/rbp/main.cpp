@@ -15,7 +15,7 @@ int main(void) {
 	map <string, string> testparams;
 	testparams.insert(pair <string, string>("type", "test"));
 	testparams.insert(pair <string, string>("var", "value1"));
-	string res = dp.ServerQuery(testparams, TEST);
+	string res = dp.ServerQuery(testparams);
 	cout << res << endl;
 
 	return 0;
