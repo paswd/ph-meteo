@@ -13,18 +13,11 @@
 #include <wiringSerial.h>
 #include <unistd.h>
 
-//#define APP_PARAMS this->AppParams
-
 using namespace std;
 
 //RuntimeParams PARAMS;
 
 void Weather::GetValues(char *bf) {
-	/*size_t TEMP_POS = 0;
-	size_t PRESS_POS = TEMP_POS + TEMP_ARR_LEN;
-	size_t ALT_POS = PRESS_POS + PRESS_ARR_LEN;
-	size_t HUM_POS = ALT_POS + ALT_ARR_LEN;*/
-
 	char *TempArr	= bf;
 	char *PressArr	= TempArr	+ TEMP_ARR_LEN;
 	char *AltArr	= PressArr	+ PRESS_ARR_LEN;
@@ -48,7 +41,7 @@ DataProcessor::DataProcessor(void) {
 }
 
 DataProcessor::~DataProcessor(void) {
-	//serialClose(this->Arduino);
+	serialClose(this->Arduino);
 }
 
 bool DataProcessor::ReadParams(void) {
@@ -87,18 +80,9 @@ bool DataProcessor::Start(void) {
 
 	this->DeviceIdHash = sha1_hash(this->AppParams["DEVICE_ID"]);
 	//PrintParams();
-
-	/*if (wiringPiSetup() != -1) {
-		cout << COLOR_GREEN << "WiringPi successfully started" << COLOR_RESET << endl;
-	} else {
-		cout << COLOR_RED << "Unable to start wiringPi" << COLOR_RESET << endl;
-		return false;
-	}*/
-
 	cout << endl << "Finding arduino" << endl;
 
 	string base = "/dev/ttyACM";
-	//string base = "/dev/ttyAMA";
 	this->Arduino = -1;
 	for (int i = 0; this->Arduino == -1 && i < 10; i++) {
 		char tmp = i + '0';
@@ -117,11 +101,9 @@ bool DataProcessor::Start(void) {
 
 		return false;
 	}
-	//serialFlush(this->Arduino);
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
-	//this->ArdBf[OUTPUT_MESSAGE_SIZE] = '\n';
 	sleep(1);
 	return true;
 }
@@ -137,21 +119,6 @@ string DataProcessor::ServerQuery(Dict variables) {
 		}
 		query_variables += it->first + "=" + it->second;
 	}
-	/*string script_path;
-	switch (query_type) {
-		case DATA_SEND:
-			script_path = this->AppParams["SERVER_SCRIPT_DATA_PATH"];
-			break;
-		case REG:
-			script_path = this->AppParams["SERVER_SCRIPT_REG_PATH"];
-			break;
-		case CHECK:
-			script_path = this->AppParams["SERVER_SCRIPT_CHECK_PATH"];
-			break;
-		case TEST:
-			script_path = this->AppParams["SERVER_SCRIPT_TEST_PATH"];
-			break;
-	}*/
 	string query_href = this->AppParams["SERVER_PROTOCOL"] + "://" + this->AppParams["SERVER_HOST"] +
 		this->AppParams["SERVER_SCRIPT_PATH"] + query_variables;
 	string query = "wget \"" +  query_href + "\" -O " + this->AppParams["QUERY_TEMP_FILE"] + " -q";
@@ -231,11 +198,6 @@ void DataProcessor::InitServerConnection(void) {
 	if (!this->Register()) {
 		return;
 	}
-	/*Dict testquery;
-	testquery.insert(DictUnit("type", "test"));
-	testquery.insert(DictUnit("var", this->DeviceIdHash));
-	string res = this->ServerQuery(testquery);
-	cout << res << endl;*/
 }
 
 bool DataProcessor::Timer(void) {
@@ -245,14 +207,8 @@ bool DataProcessor::Timer(void) {
 	if (!this->IsCorrect()) {
 		return false;
 	}
-	/*int ms = this->CurrentTimeoutMinutes * 60 * 1000;
-	int CLOCKS_PER_MSEC = CLOCKS_PER_SEC / 1000;
-	clock_t end_time = clock() + ms * CLOCKS_PER_MSEC ;  // время завершения
-	cout << "DEBUG::WAITBEGIN" << endl;
-	while (clock() < end_time);  // цикл ожидания времени
-	cout << "DEBUG::WAITEND" << endl;*/
 	if (got_data) {
-		sleep(this->CurrentTimeoutMinutes * 60);
+		sleep(this->CurrentTimeoutMinutes * 60 - 1);
 	} else {
 		sleep(1);
 	}
@@ -260,46 +216,19 @@ bool DataProcessor::Timer(void) {
 }
 
 bool DataProcessor::ProcessData(void) {
-	cout << "S1" << endl;
 	this->Check();
-	cout << "S2" << endl;
-
-	//int fd = serialOpen("/dev/ttyAMA0", 9600);
-	//cout << fd << endl;
-
-
-	cout << "S3" << endl;
-	//cout << this->Arduino << endl;
-	//serialPutchar(this->Arduino, '1');
-	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
-	//out_bf[0] = 1;
-	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
-	//this->ArdBf[0] = 1;
-	//char outbf[OUTPUT_MESSAGE_SIZE + 1];
-	//outbf[0] = 1;
-	//outbf[1] = '\0';
-	//serialPrintf(this->Arduino, outbf);
 	serialPutchar(this->Arduino, '1');
 	cout << "IN: " << endl;
 	sleep(1);
-	//cout << serialDataAvail(this->Arduino);
-	//while (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE);
 	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
 	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
 		return false;
 	}
 	char bf[INPUT_MESSAGE_SIZE];
-	//int avail;
-	/*while ((avail = serialDataAvail(this->Arduino)) < (int) INPUT_MESSAGE_SIZE) {
-		cout << "WAIT: " << avail << endl;
-	}*/
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
-		cout << (int) bf[i] << " ";
 	}
-	cout << endl;
 	this->CurrentWeather.GetValues(bf);
-
 
 	Dict query_params;
 	query_params.insert(DictUnit("type", "data"));
