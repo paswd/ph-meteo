@@ -25,9 +25,14 @@ char CharToHex(unsigned char ch) {
 
 string sha1_hash(string str) {
 	unsigned char hash[SHA1_HASH_LEN];
-	const char *str_tmp = str.c_str();
+	//const char *str_tmp = str.c_str();
+	char *str_tmp = new char[str.size()];
+	for (size_t i = 0; i < str.size(); i++) {
+		str_tmp[i] = str[i];
+	}
 	//strcpy(str_tmp, str.c_str());
 	SHA1((unsigned char *)&str_tmp, str.size() - 1, hash);
+	delete [] str_tmp;
 	//return string(hash);
 	char mdString[SHA1_HASH_LEN*2+1];
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
