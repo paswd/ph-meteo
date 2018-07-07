@@ -267,7 +267,7 @@ void DataProcessor::ProcessData(void) {
 	cout << "IN: ";
 	char bf[INPUT_MESSAGE_SIZE];
 	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;
-	int avail;
+	//int avail;
 	/*while ((avail = serialDataAvail(this->Arduino)) < (int) INPUT_MESSAGE_SIZE) {
 		cout << "WAIT: " << avail << endl;
 	}*/
