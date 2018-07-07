@@ -198,7 +198,7 @@ bool DataProcessor::Register(void) {
 
 bool DataProcessor::InitServerConnection(void) {
 	if (this->Register()) {
-		cout << COLOR_GREEN << "Device has been successfully connected to server" << endl;
+		cout << COLOR_GREEN << "Device has been successfully connected to server" << endl << endl;
 		return true;
 	}
 	return false;
