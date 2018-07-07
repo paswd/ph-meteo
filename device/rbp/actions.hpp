@@ -28,8 +28,8 @@ private:
 	int Arduino;
 	std::string PublicKey;
 	std::string DeviceIdHash;
-	time_t TimeBegin;
-	//Weather CurrentWeather;
+	//time_t TimeBegin;
+	Weather CurrentWeather;
 
 	bool ReadParams(void);
 	bool Start(void);
