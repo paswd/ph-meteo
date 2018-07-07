@@ -260,7 +260,7 @@ void DataProcessor::ProcessData(void) {
 	this->Check();
 	cout << "S2" << endl;
 
-	int fd = serialOpen("/dev/ttyACM0", 9600);
+	//int fd = serialOpen("/dev/ttyAMA0", 9600);
 	//cout << fd << endl;
 
 
@@ -275,7 +275,7 @@ void DataProcessor::ProcessData(void) {
 	//outbf[0] = 1;
 	//outbf[1] = '\0';
 	//serialPrintf(this->Arduino, outbf);
-	serialPutchar(fd, '1');
+	serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	sleep(3);
 	char bf[INPUT_MESSAGE_SIZE];
@@ -284,11 +284,11 @@ void DataProcessor::ProcessData(void) {
 	/*while ((avail = serialDataAvail(this->Arduino)) < (int) INPUT_MESSAGE_SIZE) {
 		cout << "WAIT: " << avail << endl;
 	}*/
-	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
+	/*for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
 		cout << (int) bf[i] << " ";
 	}
-	cout << endl;
+	cout << endl;*/
 	this->CurrentWeather.GetValues(bf);
 
 
