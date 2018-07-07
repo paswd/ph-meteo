@@ -148,14 +148,13 @@ void DataProcessor::GetPubKey(void) {
 }
 
 bool DataProcessor::CheckRegistration(void) {
-
+	return false;
 }
 
 bool DataProcessor::Register(void) {
-
+	return false;
 }
 
 void DataProcessor::InitServerConnection(void) {
-
 
 }
