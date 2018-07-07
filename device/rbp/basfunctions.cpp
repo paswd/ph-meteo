@@ -25,6 +25,7 @@ char CharToHex(unsigned char ch) {
 
 string sha1_hash(string str) {
 	unsigned char hash[SHA1_HASH_LEN];
+	cout << str << endl;
 	//const char *str_tmp = str.c_str();
 	char *str_tmp = new char[str.size()];
 	for (size_t i = 0; i < str.size(); i++) {
