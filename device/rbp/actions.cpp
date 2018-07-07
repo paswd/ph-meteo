@@ -120,7 +120,7 @@ bool DataProcessor::Start(void) {
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
-	this->ArdBf[OUTPUT_MESSAGE_SIZE] = '\n';
+	//this->ArdBf[OUTPUT_MESSAGE_SIZE] = '\n';
 	sleep(1);
 	return true;
 }
