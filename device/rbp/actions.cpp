@@ -246,10 +246,10 @@ void DataProcessor::ProcessData(void) {
 	char bf[INPUT_MESSAGE_SIZE];
 	cout << "S3" << endl;
 	//serialPutchar(this->Arduino, '1');
-	serialPrintf(this->Arduino, out_bf);
 	char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	out_bf[0] = '1';
 	out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
+	serialPrintf(this->Arduino, out_bf);
 	cout << "IN: ";
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
