@@ -1,3 +1,4 @@
+#include "headers.hpp"
 #include "actions.hpp"
 #include "basfunctions.hpp"
 
@@ -85,7 +86,7 @@ bool DataProcessor::Start(void) {
 	return true;
 }
 
-string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType query_type) {
+string DataProcessor::ServerQuery(map<string, string> variables) {
 	string query_variables = "?";
 	bool first = true;
 	for (auto it = variables.begin(); it != variables.end(); it++) {
@@ -96,7 +97,7 @@ string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType qu
 		}
 		query_variables += it->first + "=" + it->second;
 	}
-	string script_path;
+	/*string script_path;
 	switch (query_type) {
 		case DATA_SEND:
 			script_path = APP_PARAMS["SERVER_SCRIPT_DATA_PATH"];
@@ -110,9 +111,9 @@ string DataProcessor::ServerQuery(map<string, string> variables, GetQueryType qu
 		case TEST:
 			script_path = APP_PARAMS["SERVER_SCRIPT_TEST_PATH"];
 			break;
-	}
+	}*/
 	string query_href = APP_PARAMS["SERVER_PROTOCOL"] + "://" + APP_PARAMS["SERVER_HOST"] +
-		script_path + query_variables;
+		APP_PARAMS["SERVER_SCRIPT_PATH"] + query_variables;
 	string query = "wget \"" +  query_href + "\" -O " + APP_PARAMS["QUERY_TEMP_FILE"] + " -q";
 	system(query.c_str());
 

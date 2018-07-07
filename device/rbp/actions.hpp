@@ -18,7 +18,7 @@ public:
 	bool ReadParams(void);
 	void PrintParams(void);
 	bool Start(void);
-	std::string ServerQuery(std::map<std::string, std::string> params, GetQueryType query_type);
+	std::string ServerQuery(std::map<std::string, std::string> params);
 	bool IsStarted(void);
 };
 

@@ -27,15 +27,16 @@ public:
 	std::map <std::string, std::string> AppParams;
 	size_t CurrentTimeoutMinutes;
 	int Arduino;
+	std::string PublicKey;
 };
 
 //extern RuntimeParams PARAMS;
 
-typedef enum {
+/*typedef enum {
 	DATA_SEND,
 	REG,
 	CHECK,
 	TEST
-} GetQueryType;
+} GetQueryType;*/
 
 #endif
