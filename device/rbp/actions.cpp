@@ -48,7 +48,7 @@ DataProcessor::DataProcessor(void) {
 }
 
 DataProcessor::~DataProcessor(void) {
-	serialClose(this->Arduino);
+	//serialClose(this->Arduino);
 }
 
 bool DataProcessor::ReadParams(void) {
