@@ -27,7 +27,7 @@ string sha1_hash(string str) {
 	unsigned char hash[SHA1_HASH_LEN];
 	cout << str << endl;
 	//const char *str_tmp = str.c_str();
-	char *str_tmp = new char[str.size()];
+	unsigned char *str_tmp = new unsigned char[str.size()];
 	for (size_t i = 0; i < str.size(); i++) {
 		str_tmp[i] = str[i];
 		cout << (int) str[i] << ":" << str[i] << endl;
@@ -36,8 +36,8 @@ string sha1_hash(string str) {
 	cout << "Size2: " << str.size() << endl;
 	cout << "Size3: " << str.length() << endl;
 	//strcpy(str_tmp, str.c_str());
-	unsigned char str_tmp1[] = "eDCvyH1MTwc1t8AX";
-	SHA1((unsigned char *)str_tmp1, sizeof(str_tmp1) - 1, hash);
+	//unsigned char str_tmp1[] = "eDCvyH1MTwc1t8AX";
+	SHA1((unsigned char *)str_tmp1, str.size() - 1, hash);
 	delete [] str_tmp;
 	//return string(hash);
 	char mdString[SHA1_HASH_LEN*2+1];
