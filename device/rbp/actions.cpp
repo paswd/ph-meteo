@@ -224,14 +224,18 @@ void DataProcessor::InitServerConnection(void) {
 }
 
 bool DataProcessor::Timer(void) {
+	cout << "DEBUG::PROCDATA" << endl;
 	this->ProcessData();
+	cout << "DEBUG::ISCORRECT" << endl;
 	if (!this->IsCorrect()) {
 		return false;
 	}
 	int ms = this->CurrentTimeoutMinutes * 60 * 1000;
 	int CLOCKS_PER_MSEC = CLOCKS_PER_SEC / 1000;
 	clock_t end_time = clock() + ms * CLOCKS_PER_MSEC ;  // время завершения
-	while (clock() < end_time) {}  // цикл ожидания времени
+	cout << "DEBUG::WAITBEGIN" << endl;
+	while (clock() < end_time);  // цикл ожидания времени
+	cout << "DEBUG::WAITEND" << endl;
 	return true;
 }
 

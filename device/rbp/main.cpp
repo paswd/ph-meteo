@@ -12,6 +12,7 @@ int main(void) {
 		return 0;
 	}
 	dp.InitServerConnection();
+	cout << "DEBUG::START TIMER" << endl;
 	while (dp.Timer());
 
 	return 0;
