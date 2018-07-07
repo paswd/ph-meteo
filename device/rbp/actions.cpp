@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctime>
+#include <wiringPi.h>
 #include <wiringSerial.h>
 
 //#define APP_PARAMS this->AppParams
@@ -43,6 +44,7 @@ DataProcessor::DataProcessor(void) {
 		cout << MESSAGE_FATAL_ERROR << endl;
 		this->ErrorNum = 1;
 	}
+	wiringPiSetup();
 }
 
 DataProcessor::~DataProcessor(void) {
