@@ -16,13 +16,6 @@ long long StringToNum(string str) {
 	return res;
 }
 
-char CharToHex(unsigned char ch) {
-	if (ch <= 9) {
-		return ch + '0'; 
-	}
-	return ch + 'a' - 10;
-}
-
 string sha1_hash(string str) {
 	unsigned char primary_hash[SHA1_HASH_LEN];
 	cout << str << endl;
@@ -42,9 +35,9 @@ string sha1_hash(string str) {
 	}
 	cout << hash << endl;
 	string res = "";
-	for (size_t i = 0; i < SHA1_HASH_LEN * 2 + 1; i++) {
+	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
 		cout << (char) hash[i] << ":" << (int) hash[i] << " ";
-		res += CharToHex(hash[i]);
+		res += (char) hash[i];
 	}
 	cout << endl;
 	return res;
