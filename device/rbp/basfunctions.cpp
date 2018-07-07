@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const size_t SHA1_HASH_LEN = 20;
+const size_t SHA1_HASH_LEN = 40;
 
 long long StringToNum(string str) {
 	stringstream sstream(str);
@@ -29,6 +29,7 @@ string sha1_hash(string str) {
 	char *str_tmp = new char[str.size()];
 	for (size_t i = 0; i < str.size(); i++) {
 		str_tmp[i] = str[i];
+		cout << (int) str[i] << ":" << str[i] << endl;
 	}
 	//strcpy(str_tmp, str.c_str());
 	SHA1((unsigned char *)str_tmp, sizeof(str_tmp) - 1, hash);
