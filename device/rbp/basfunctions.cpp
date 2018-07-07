@@ -29,9 +29,14 @@ string sha1_hash(string str) {
 	//strcpy(str_tmp, str.c_str());
 	SHA1((unsigned char *)&str_tmp, str.size() - 1, hash);
 	//return string(hash);
+	char mdString[SHA1_HASH_LEN*2+1];
+	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
+    	sprintf(&mdString[i*2], "%02x", (unsigned int)hash[i]);
+	}
+	cout << mdstring << endl;
 	string res = "";
 	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
-		cout << (int) hash[i] << " ";
+		//cout << (int) hash[i] << " ";
 		res += CharToHex(hash[i]);
 	}
 	cout << endl;
