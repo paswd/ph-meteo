@@ -262,8 +262,8 @@ void DataProcessor::ProcessData(void) {
 	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	//out_bf[0] = '1';
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
-	//serialPrintf(this->Arduino, "1\n");
-	serialPutchar(this->Arduino, '1');
+	serialPrintf(this->Arduino, "1\n");
+	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	char bf[INPUT_MESSAGE_SIZE];
 	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;

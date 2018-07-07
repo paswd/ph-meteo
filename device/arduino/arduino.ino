@@ -62,10 +62,14 @@ void setup() {
     Serial.println(F("Could not find a valid BMP280 sensor, check wiring!"));
     while (1);
   }
+  pinMode(2, OUTPUT);
 }
 
 void loop() {
   if (Serial.available() > 0) {
+    digitalWrite(2, HIGH);
+    delay(200);
+    digitalWrite(2, LOW);
     int in_byte = Serial.read();
     if (in_byte != '1') {
       return;
