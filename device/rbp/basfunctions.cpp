@@ -1,4 +1,5 @@
 #include "basfunctions.hpp"
+#include <iostream>
 #include <sstream>
 #include <openssl/sha.h>
 
