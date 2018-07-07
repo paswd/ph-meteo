@@ -115,6 +115,7 @@ bool DataProcessor::Start(void) {
 
 		return false;
 	}
+	serialFlush(this->Arduino);
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
@@ -265,7 +266,7 @@ void DataProcessor::ProcessData(void) {
 	char bf[INPUT_MESSAGE_SIZE];
 	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
 		bf[i] = (char) serialGetchar(this->Arduino);
-		cout << (int) bf[i];
+		cout << (int) bf[i] << " ";
 	}
 	cout << endl;
 	this->CurrentWeather.GetValues(bf);
