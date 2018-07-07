@@ -11,10 +11,8 @@ int main(void) {
 	if (!dp.IsCorrect()) {
 		return 0;
 	}
-
 	dp.InitServerConnection();
-
-	//cout << sha1_hash("test");
+	while (dp.Timer());
 
 	return 0;
 }

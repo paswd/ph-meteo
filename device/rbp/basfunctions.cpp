@@ -9,11 +9,36 @@ using namespace std;
 
 const size_t SHA1_HASH_LEN = 40;
 
+long long CharToNum(char ch) {
+	if (ch >= '0' && ch <= '9') {
+		return (long long) (ch - '0');
+	}
+	return 0;
+}
+
 long long StringToNum(string str) {
 	stringstream sstream(str);
 	long long res;
 	sstream >> res;
 	return res;
+}
+long long StringToNum(char *str, size_t len) {
+	long long res = 0;
+	for (size_t i = 0; i < len; i++) {
+		res *= 10;
+		res += CharToNum(str[i]);
+	}
+	return res;
+}
+
+long long DoubleToNum(double val) {
+  long long res = (long long) val;
+  long long md = (long long) (val * 10);
+  md %= 10;
+  if (md >= 5) {
+    res++;
+  }
+  return res;
 }
 
 string sha1_hash(string str) {

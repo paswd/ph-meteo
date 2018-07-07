@@ -75,6 +75,8 @@ void loop() {
     long altVal = floatToLong(bmp.readAltitude(1013.25));
     long humVal = floatToLong(calc_hum(analogRead(DHTPIN)));
 
+    tempVal += 273;
+
     char tempArr[TEMP_ARR_LEN];
     char pressArr[PRESS_ARR_LEN];
     char altArr[ALT_ARR_LEN];

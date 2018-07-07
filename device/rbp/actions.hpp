@@ -8,6 +8,16 @@
 #include <ctime>
 #include "headers.hpp"
 
+class Weather {
+public:
+	int Temperature;
+	int APressure;
+	int Altitude;
+	int Humidity;
+
+	void GetValues(char *bf);
+};
+
 class DataProcessor {
 private:
 	//RuntimeParams Params;
@@ -19,13 +29,15 @@ private:
 	std::string PublicKey;
 	std::string DeviceIdHash;
 	time_t TimeBegin;
+	Weather CurrentWeather;
 
 	bool ReadParams(void);
 	bool Start(void);
 	std::string ServerQuery(std::map<std::string, std::string> params);
 	void GetPubKey(void);
-	long long CheckRegistration(void);
+	long long Check(void);
 	bool Register(void);
+	void ProcessData(void);
 
 public:
 	DataProcessor(void);
@@ -34,6 +46,7 @@ public:
 	void PrintParams(void);
 	bool IsCorrect(void);
 	void InitServerConnection(void);
+	void Timer(void);
 };
 
 #endif

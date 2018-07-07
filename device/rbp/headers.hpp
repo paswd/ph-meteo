@@ -25,14 +25,14 @@ const std::string COLOR_RESET("\033[0m");
 
 const std::string MESSAGE_FATAL_ERROR = COLOR_RED + "FATAL ERROR! The server was interrupt" + COLOR_RESET;
 
-class RuntimeParams {
+/*class RuntimeParams {
 public:
 	std::map <std::string, std::string> AppParams;
 	size_t CurrentTimeoutMinutes;
 	int Arduino;
 	std::string PublicKey;
 	std::string DeviceIdHash;
-};
+};*/
 
 //extern RuntimeParams PARAMS;
 

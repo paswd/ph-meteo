@@ -17,6 +17,26 @@ using namespace std;
 
 //RuntimeParams PARAMS;
 
+void Weather::GetValues(char *bf) {
+	/*size_t TEMP_POS = 0;
+	size_t PRESS_POS = TEMP_POS + TEMP_ARR_LEN;
+	size_t ALT_POS = PRESS_POS + PRESS_ARR_LEN;
+	size_t HUM_POS = ALT_POS + ALT_ARR_LEN;*/
+
+	char *TempArr	= bf;
+	char *PressArr	= TempArr	+ TEMP_ARR_LEN;
+	char *AltArr	= PressArr	+ PRESS_ARR_LEN;
+	char *HumPos	= AltArr	+ ALT_ARR_LEN;
+
+	this->Temperature	= (int) StringToNum(TempArr,	TEMP_ARR_LEN);
+	this->APressure		= (int) StringToNum(PressArr,	PRESS_ARR_LEN);
+	this->Altitude		= (int) StringToNum(AltArr,		ALT_ARR_LEN);
+	this->Humidity		= (int) StringToNum(HumArr,		HUM_ARR_LEN);
+
+	this->Temperature -= 273;
+	this->APressure = DoubleToNum((double) this->APressure / 133.3224);
+}
+
 DataProcessor::DataProcessor(void) {
 	this->ErrorNum = 0;
 	if (!this->Start()) {
@@ -25,7 +45,9 @@ DataProcessor::DataProcessor(void) {
 	}
 }
 
-DataProcessor::~DataProcessor(void) {}
+DataProcessor::~DataProcessor(void) {
+	serialClose(this->Arduino);
+}
 
 bool DataProcessor::ReadParams(void) {
 	ifstream fin("init.conf");
@@ -148,7 +170,7 @@ void DataProcessor::GetPubKey(void) {
 	fout.close();
 }
 
-long long DataProcessor::CheckRegistration(void) {
+long long DataProcessor::Check(void) {
 	Dict query_params;
 	query_params.insert(DictUnit("type", "check"));
 	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
@@ -161,7 +183,7 @@ long long DataProcessor::CheckRegistration(void) {
 
 bool DataProcessor::Register(void) {
 	cout << "Checking registration... ";
-	if (this->CheckRegistration() != -1) {
+	if (this->Check() != -1) {
 		cout << COLOR_GREEN << "[REGISTERED]" << endl;
 		return true;
 	}
@@ -176,7 +198,7 @@ bool DataProcessor::Register(void) {
 		case 0:
 			cout << COLOR_GREEN << "[OK]" << COLOR_RESET << endl;
 			break;
-		case 2:
+		case 1:
 			cout << COLOR_RED << "[FAILED]" << endl;
 			cout << COLOR_RED << "Required parameters (unic_id) is missing" << COLOR_RESET << endl;
 			break;
@@ -199,4 +221,60 @@ void DataProcessor::InitServerConnection(void) {
 	testquery.insert(DictUnit("var", this->DeviceIdHash));
 	string res = this->ServerQuery(testquery);
 	cout << res << endl;*/
+}
+
+bool DataProcessor::Timer(void) {
+	this->ProcessData();
+	if (!this->IsCorrect()) {
+		return false;
+	}
+	int ms = this->CurrentTimeoutMinutes * 60 * 1000;
+	int CLOCKS_PER_MSEC = CLOCKS_PER_SEC / 1000;
+	clock_t end_time = clock() + ms * CLOCKS_PER_MSEC ;  // время завершения
+	while (clock() < end_time) {}  // цикл ожидания времени
+	return true;
+}
+
+void DataProcessor::ProcessData(void) {
+	this->Check();
+	char bf[INPUT_MESSAGE_SIZE];
+	serialPutchar(this->Arduino, '1');
+	cout << "IN: ";
+	for (size_t i = 0; i < INPUT_MESSAGE_SIZE; i++) {
+		bf[i] = (char) serialGetchar(this->Arduino);
+		cout << bf[i];
+	}
+	cout << endl;
+	this->CurrentWeather.GetValues();
+
+	Dict query_params;
+	query_params.insert(DictUnit("type", "data"));
+	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
+	query_params.insert(DictUnit("temperature", this->CurrentWeather.Temperature));
+	query_params.insert(DictUnit("atmosphere_pressure", this->CurrentWeather.APressure));
+	query_params.insert(DictUnit("altitude", this->CurrentWeather.Altitude));
+	query_params.insert(DictUnit("humidity", this->CurrentWeather.Humidity));
+	this->ErrorNum = StringToNum(this->ServerQuery(query_params));
+
+	switch (this->ErrorNum) {
+		case 0:
+			cout << COLOR_BLUE << "Temperature:\t\t\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
+			cout << COLOR_BLUE << "Atmpsphere pressure\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
+			cout << COLOR_BLUE << "Altitude:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
+			cout << COLOR_BLUE << "Humidity:\t\t\t\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl << endl;
+			break;
+
+		case 1:
+			cout << COLOR_RED << "The station was not found" << COLOR_RESET << endl;
+			break;
+
+		case 2:
+			cout << COLOR_RED << "Required parameters (temperature, humidity or atmosphere pressure) is missing" << COLOR_RESET << endl;
+			break;
+
+		default:
+			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
+			break;
+	}
+
 }

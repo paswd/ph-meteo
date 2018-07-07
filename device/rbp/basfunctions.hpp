@@ -4,6 +4,8 @@
 #include "headers.hpp"
 
 long long StringToNum(std::string str);
+long long StringToNum(char *str, size_t len);
+long long DoubleToNum(double val);
 std::string sha1_hash(std::string str);
 
 
