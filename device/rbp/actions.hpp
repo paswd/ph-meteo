@@ -20,6 +20,7 @@ public:
 	bool Start(void);
 	std::string ServerQuery(std::map<std::string, std::string> params);
 	bool IsStarted(void);
+	void GetPubKey(void);
 };
 
 #endif

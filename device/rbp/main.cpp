@@ -12,11 +12,12 @@ int main(void) {
 		return 0;
 	}
 
-	map <string, string> testparams;
+	/*map <string, string> testparams;
 	testparams.insert(pair <string, string>("type", "getpubkey"));
 	//testparams.insert(pair <string, string>("var", "value1"));
 	string res = dp.ServerQuery(testparams);
-	cout << res << endl;
+	cout << res << endl;*/
+	dp.GetPubKey();
 
 	return 0;
 }

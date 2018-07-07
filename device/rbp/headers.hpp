@@ -3,6 +3,9 @@
 
 #include <map>
 
+typedef map<string,string> Dict;
+typedef pair<string,string> DictUnit;
+
 const size_t TEMP_ARR_LEN = 3;
 const size_t PRESS_ARR_LEN = 6;
 const size_t ALT_ARR_LEN = 4;

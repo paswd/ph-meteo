@@ -86,7 +86,7 @@ bool DataProcessor::Start(void) {
 	return true;
 }
 
-string DataProcessor::ServerQuery(map<string, string> variables) {
+string DataProcessor::ServerQuery(Dict variables) {
 	string query_variables = "?";
 	bool first = true;
 	for (auto it = variables.begin(); it != variables.end(); it++) {
@@ -135,4 +135,12 @@ bool DataProcessor::IsStarted(void) {
 		return true;
 	}
 	return false;
+}
+void DataProcessor::GetPubKey(void) {
+	Dict query_params;
+	query_params.insert(DictUnit("type", "getpubkey"));
+	string pubkey = this->ServerQuery(query_params);
+	ofstream fout(APP_PARAMS["PUBLIC_KEY_FILE"].c_str(), ios::out);
+	fout << pubkey << endl;
+	fout.close();
 }
