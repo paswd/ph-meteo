@@ -24,33 +24,26 @@ char CharToHex(unsigned char ch) {
 }
 
 string sha1_hash(string str) {
-	unsigned char hash[SHA1_HASH_LEN];
+	unsigned char primary_hash[SHA1_HASH_LEN];
 	cout << str << endl;
 	//const char *str_tmp = str.c_str();
 	unsigned char *str_tmp = new unsigned char[str.size() + 1];
 	for (size_t i = 0; i < str.size(); i++) {
 		str_tmp[i] = str[i];
-		cout << (int) str[i] << ":" << str[i] << endl;
+		//cout << (int) str[i] << ":" << str[i] << endl;
 	}
 	str_tmp[str.size()] = 0;
-	cout << "Size1: " << sizeof(str_tmp) << endl;
-	cout << "Size2: " << str.size() << endl;
-	cout << "Size3: " << str.length() << endl;
-	//strcpy(str_tmp, str.c_str());
-	unsigned char str_tmp1[] = "eDCvyH1MTwc1t8AX";
-	//cout << (int) str_tmp[16] << endl;
-	cout << "Size4: " << sizeof(str_tmp1) << endl;
 	SHA1((unsigned char *)str_tmp, str.size(), hash);
 	delete [] str_tmp;
 	//return string(hash);
-	char mdString[SHA1_HASH_LEN*2+1];
+	char hash[SHA1_HASH_LEN*2+1];
 	for(int i = 0; i < SHA_DIGEST_LENGTH; i++) {
-    	sprintf(&mdString[i*2], "%02x", (unsigned int)hash[i]);
+    	sprintf(&hash[i*2], "%02x", (unsigned int)primary_hash[i]);
 	}
-	cout << mdString << endl;
+	cout << hash << endl;
 	string res = "";
-	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
-		//cout << (int) hash[i] << " ";
+	for (size_t i = 0; i < SHA1_HASH_LEN * 2 + 1; i++) {
+		cout << (int) hash[i] << " ";
 		res += CharToHex(hash[i]);
 	}
 	cout << endl;
