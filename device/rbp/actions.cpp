@@ -167,7 +167,7 @@ long long DataProcessor::Check(void) {
 bool DataProcessor::Register(void) {
 	cout << "Checking registration... ";
 	if (this->Check() != -1) {
-		cout << COLOR_GREEN << "[REGISTERED]" << COLOR_RESET << endl;
+		cout << COLOR_GREEN << "[REGISTERED]" << COLOR_RESET << endl << endl;
 		return true;
 	}
 	cout << COLOR_YELLOW << "[NOT REGISTERED]" << COLOR_RESET << endl;
@@ -191,6 +191,7 @@ bool DataProcessor::Register(void) {
 			cout << COLOR_RED << "Unknown error occurred in registration" << COLOR_RESET << endl;
 			break;
 	}
+	cout << endl;
 
 	return res == 0 ? true : false;
 }
@@ -218,8 +219,6 @@ bool DataProcessor::ProcessData(void) {
 	this->Check();
 	serialPutchar(this->Arduino, '1');
 	sleep(1);
-	//cout << "Available: " << serialDataAvail(this->Arduino) << endl;
-	cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl;
 	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
 		cout << COLOR_RED << "No available data. Repeat..." << COLOR_RESET << endl << endl;
 		return false;
@@ -260,6 +259,7 @@ bool DataProcessor::ProcessData(void) {
 			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
 			break;
 	}
+	cout << endl << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl << endl;
 	return true;
 
 }
