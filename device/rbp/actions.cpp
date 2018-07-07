@@ -244,12 +244,13 @@ bool DataProcessor::Timer(void) {
 	if (!this->IsCorrect()) {
 		return false;
 	}
-	int ms = this->CurrentTimeoutMinutes * 60 * 1000;
+	/*int ms = this->CurrentTimeoutMinutes * 60 * 1000;
 	int CLOCKS_PER_MSEC = CLOCKS_PER_SEC / 1000;
 	clock_t end_time = clock() + ms * CLOCKS_PER_MSEC ;  // время завершения
 	cout << "DEBUG::WAITBEGIN" << endl;
 	while (clock() < end_time);  // цикл ожидания времени
-	cout << "DEBUG::WAITEND" << endl;
+	cout << "DEBUG::WAITEND" << endl;*/
+	sleep(this->CurrentTimeoutMinutes * 60);
 	return true;
 }
 
@@ -264,9 +265,7 @@ void DataProcessor::ProcessData(void) {
 	//out_bf[0] = 1;
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
 	this->ArdBf[0] = 1;
-	int fd = serialOpen("/dev/ttyACM0", 9600);
-	serialPrintf(fd, this->ArdBf);
-	serialClose(fd);
+	serialPrintf(this->Arduino, this->ArdBf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	char bf[INPUT_MESSAGE_SIZE];
