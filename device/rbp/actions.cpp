@@ -104,7 +104,7 @@ bool DataProcessor::Start(void) {
 		char tmp = i + '0';
 		string addr = base + tmp;
 		cout << "Connecting " << addr << "... ";
-		//this->Arduino = serialOpen(addr.c_str(), 9600);
+		this->Arduino = serialOpen(addr.c_str(), 9600);
 		if (this->Arduino != -1) {
 			cout << COLOR_GREEN << "[OK]" << COLOR_RESET;
 		} else {
@@ -115,7 +115,7 @@ bool DataProcessor::Start(void) {
 	if (this->Arduino == -1) {
 		cout << COLOR_RED << "Arduino connection error" << COLOR_RESET << endl;
 
-		//return false;
+		return false;
 	}
 	//serialFlush(this->Arduino);
 
@@ -260,8 +260,8 @@ void DataProcessor::ProcessData(void) {
 	this->Check();
 	cout << "S2" << endl;
 
-	int fd = serialOpen("/dev/ttyACM0", 9600);
-	cout << fd << endl;
+	//int fd = serialOpen("/dev/ttyACM0", 9600);
+	//cout << fd << endl;
 
 
 	cout << "S3" << endl;
@@ -271,8 +271,9 @@ void DataProcessor::ProcessData(void) {
 	//out_bf[0] = 1;
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
 	//this->ArdBf[0] = 1;
-	char outbf[OUTPUT_MESSAGE_SIZE];
+	char outbf[OUTPUT_MESSAGE_SIZE + 1];
 	outbf[0] = 1;
+	outbf[1] = '\0';
 	serialPrintf(fd, outbf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
