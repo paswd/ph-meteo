@@ -36,7 +36,7 @@ string sha1_hash(string str) {
 	cout << "Size2: " << str.size() << endl;
 	cout << "Size3: " << str.length() << endl;
 	//strcpy(str_tmp, str.c_str());
-	SHA1((unsigned char *)str_tmp, sizeof(str_tmp) - 1, hash);
+	SHA1((unsigned char *)str_tmp, str.size() - 1, hash);
 	delete [] str_tmp;
 	//return string(hash);
 	char mdString[SHA1_HASH_LEN*2+1];
