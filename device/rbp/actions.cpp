@@ -96,6 +96,7 @@ bool DataProcessor::Start(void) {
 	}*/
 
 	cout << endl << "Finding arduino" << endl;
+
 	string base = "/dev/ttyACM";
 	//string base = "/dev/ttyAMA";
 	this->Arduino = -1;
@@ -103,7 +104,7 @@ bool DataProcessor::Start(void) {
 		char tmp = i + '0';
 		string addr = base + tmp;
 		cout << "Connecting " << addr << "... ";
-		this->Arduino = serialOpen(addr.c_str(), 9600);
+		//this->Arduino = serialOpen(addr.c_str(), 9600);
 		if (this->Arduino != -1) {
 			cout << COLOR_GREEN << "[OK]" << COLOR_RESET;
 		} else {
@@ -258,8 +259,13 @@ void DataProcessor::ProcessData(void) {
 	cout << "S1" << endl;
 	this->Check();
 	cout << "S2" << endl;
+
+	int fd = serialOpen("/dev/ttyACM0", 9600);
+	cout << fd << endl;
+
+
 	cout << "S3" << endl;
-	cout << this->Arduino << endl;
+	//cout << this->Arduino << endl;
 	//serialPutchar(this->Arduino, '1');
 	//char out_bf[OUTPUT_MESSAGE_SIZE + 1];
 	//out_bf[0] = 1;
@@ -267,7 +273,7 @@ void DataProcessor::ProcessData(void) {
 	//this->ArdBf[0] = 1;
 	char outbf[OUTPUT_MESSAGE_SIZE];
 	outbf[0] = 1;
-	serialPrintf(this->Arduino, outbf);
+	serialPrintf(fd, outbf);
 	//serialPutchar(this->Arduino, '1');
 	cout << "IN: ";
 	sleep(3);
