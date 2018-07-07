@@ -219,6 +219,7 @@ bool DataProcessor::ProcessData(void) {
 	sleep(1);
 	cout << "Available: " << serialDataAvail(this->Arduino) << endl;
 	if (serialDataAvail(this->Arduino) < OUTPUT_MESSAGE_SIZE) {
+		cout << COLOR_RED << "No available data. Repeat..." << COLOR_RESET << endl;
 		return false;
 	}
 	char bf[INPUT_MESSAGE_SIZE];
@@ -226,6 +227,7 @@ bool DataProcessor::ProcessData(void) {
 		bf[i] = (char) serialGetchar(this->Arduino);
 	}
 	this->CurrentWeather.GetValues(bf);
+	cout << COLOR_GREEN << "Weather data has been successfully received" << COLOR_RESET << endl;
 
 	Dict query_params;
 	query_params.insert(DictUnit("type", "data"));
