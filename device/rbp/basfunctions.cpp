@@ -22,12 +22,15 @@ char CharToHex(unsigned char ch) {
 
 string sha1_hash(string str) {
 	unsigned char hash[SHA1_HASH_LEN];
-	SHA1(reinterpret_cast<const unsigned char *>(str.c_str()), str.size() - 1, hash);
+	char str_tmp[] = str.c_str();
+	SHA1((unsigned char *)&str_tmp, str.size() - 1, hash);
 	//return string(hash);
 	string res = "";
 	for (size_t i = 0; i < SHA1_HASH_LEN; i++) {
+		cout << (int) hash[i] << " ";
 		res += CharToHex(hash[i]);
 	}
+	cout << endl;
 	return res;
 }
 
