@@ -33,7 +33,7 @@ string sha1_hash(string str) {
 		//cout << (int) str[i] << ":" << str[i] << endl;
 	}
 	str_tmp[str.size()] = 0;
-	SHA1((unsigned char *)str_tmp, str.size(), hash);
+	SHA1((unsigned char *)str_tmp, str.size(), primary_hash);
 	delete [] str_tmp;
 	//return string(hash);
 	char hash[SHA1_HASH_LEN*2+1];
