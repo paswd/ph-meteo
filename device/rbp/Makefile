@@ -1,4 +1,4 @@
-FLAGS=-pedantic -Wall -Werror -Wno-sign-compare -Wno-long-long -lm -std=c++11 -O2 -lwiringPi -lssl
+FLAGS=-pedantic -Wall -Werror -Wno-sign-compare -Wno-long-long -lm -std=c++11 -O2 -lm -lwiringPi -lssl
 COMPILLER=g++
 
 all: start
