@@ -43,7 +43,7 @@ string sha1_hash(string str) {
 	cout << hash << endl;
 	string res = "";
 	for (size_t i = 0; i < SHA1_HASH_LEN * 2 + 1; i++) {
-		cout << (int) hash[i] << " ";
+		cout << (char) hash[i] << ":" << (int) hash[i] << " ";
 		res += CharToHex(hash[i]);
 	}
 	cout << endl;
