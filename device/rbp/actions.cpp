@@ -192,6 +192,7 @@ bool DataProcessor::Register(void) {
 			break;
 	}
 	cout << endl;
+	this->CurrentTimeoutMinutes = (size_t) StringToNum(this->AppParams["TIMEOUT_DEFAULT_MINUTES"]);
 
 	return res == 0 ? true : false;
 }
