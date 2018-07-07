@@ -11,6 +11,7 @@
 #include <ctime>
 #include <wiringPi.h>
 #include <wiringSerial.h>
+#include <unistd.h>
 
 //#define APP_PARAMS this->AppParams
 
@@ -119,6 +120,7 @@ bool DataProcessor::Start(void) {
 
 	cout << "Arduino has been found" << endl;
 	cout << endl << COLOR_GREEN << "Data processor has been successfully started" << COLOR_RESET << endl << endl;
+	sleep(1);
 	return true;
 }
 

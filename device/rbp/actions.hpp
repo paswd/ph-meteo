@@ -29,7 +29,7 @@ private:
 	std::string PublicKey;
 	std::string DeviceIdHash;
 	time_t TimeBegin;
-	Weather CurrentWeather;
+	//Weather CurrentWeather;
 
 	bool ReadParams(void);
 	bool Start(void);
