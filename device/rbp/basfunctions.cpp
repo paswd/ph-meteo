@@ -1,6 +1,8 @@
 #include "basfunctions.hpp"
 #include <iostream>
+#include <string>
 #include <sstream>
+#include <string.h>
 #include <openssl/sha.h>
 
 using namespace std;
