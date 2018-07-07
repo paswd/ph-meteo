@@ -260,7 +260,7 @@ void DataProcessor::ProcessData(void) {
 	this->Check();
 	cout << "S2" << endl;
 
-	//int fd = serialOpen("/dev/ttyACM0", 9600);
+	int fd = serialOpen("/dev/ttyACM0", 9600);
 	//cout << fd << endl;
 
 
@@ -271,11 +271,11 @@ void DataProcessor::ProcessData(void) {
 	//out_bf[0] = 1;
 	//out_bf[OUTPUT_MESSAGE_SIZE] = '\n';
 	//this->ArdBf[0] = 1;
-	char outbf[OUTPUT_MESSAGE_SIZE + 1];
-	outbf[0] = 1;
-	outbf[1] = '\0';
-	serialPrintf(this->Arduino, outbf);
-	//serialPutchar(this->Arduino, '1');
+	//char outbf[OUTPUT_MESSAGE_SIZE + 1];
+	//outbf[0] = 1;
+	//outbf[1] = '\0';
+	//serialPrintf(this->Arduino, outbf);
+	serialPutchar(fd, '1');
 	cout << "IN: ";
 	sleep(3);
 	char bf[INPUT_MESSAGE_SIZE];
