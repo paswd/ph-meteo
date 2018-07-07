@@ -159,10 +159,12 @@ long long DataProcessor::CheckRegistration(void) {
 }
 
 bool DataProcessor::Register(void) {
+	cout << "Checking registration... ";
 	if (this->CheckRegistration() != -1) {
+		cout << COLOR_GREEN << "[REGISTERED]" << endl;
 		return true;
 	}
-	cout << COLOR_YELLOW << "Your device has not been registered yet" << COLOR_RESET << endl;
+	cout << COLOR_YELLOW << "[NOT REGISTERED]" << endl;
 	cout << " Registering... ";
 	Dict query_params;
 	query_params.insert(DictUnit("type", "registration"));
