@@ -236,6 +236,7 @@ bool DataProcessor::ProcessData(void) {
 
 	Dict query_params;
 	do {
+		registered = true;
 		query_params.insert(DictUnit("type", "data"));
 		query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
 		query_params.insert(DictUnit("temperature", NumToString(this->CurrentWeather.Temperature)));
