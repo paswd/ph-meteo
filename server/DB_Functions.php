@@ -31,7 +31,7 @@ class DB_Functions {
         $this->conn->query("INSERT INTO `meteostation_data`
             VALUES(NULL, $id_stat, $current_time, $temperature, $humidity, $atmosphere_pressure, $altitude, '')") or die(mysqli_error($this->conn));
 
-        $res = $this->conn->query("SELECT * FROM `meteostation_data` WHERE `unic_id` = $id_stat AND `time` = $current_time") or die(mysqli_error($this->conn));
+        $res = $this->conn->query("SELECT * FROM `meteostation_data` WHERE `station_id` = $id_stat AND `time` = $current_time") or die(mysqli_error($this->conn));
         return $res->num_rows;
     }
 
