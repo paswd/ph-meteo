@@ -129,7 +129,6 @@ string DataProcessor::ServerQuery(Dict variables) {
 	string res = "";
 	while (query_res_file.get(ch)) {
 		res += ch;
-		//cout << ch << endl;
 	}
 	query_res_file.close();
 	system(("rm " + this->AppParams["QUERY_TEMP_FILE"]).c_str());
