@@ -270,7 +270,7 @@ bool DataProcessor::ProcessData(void) {
 				cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
 				break;
 		}
-	while (!registered);
+	} while (!registered);
 	return true;
 
 }
