@@ -231,40 +231,46 @@ bool DataProcessor::ProcessData(void) {
 	}
 	this->CurrentWeather.GetValues(bf);
 	cout << COLOR_GREEN << "Weather data has been successfully received" << COLOR_RESET << endl;
+	
+	bool registered = true;
 
 	Dict query_params;
-	query_params.insert(DictUnit("type", "data"));
-	query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
-	query_params.insert(DictUnit("temperature", NumToString(this->CurrentWeather.Temperature)));
-	query_params.insert(DictUnit("atmosphere_pressure", NumToString(this->CurrentWeather.APressure)));
-	query_params.insert(DictUnit("altitude", NumToString(this->CurrentWeather.Altitude)));
-	query_params.insert(DictUnit("humidity", NumToString(this->CurrentWeather.Humidity)));
-	this->ErrorNum = StringToNum(this->ServerQuery(query_params));
+	do {
+		query_params.insert(DictUnit("type", "data"));
+		query_params.insert(DictUnit("unic_id", this->DeviceIdHash));
+		query_params.insert(DictUnit("temperature", NumToString(this->CurrentWeather.Temperature)));
+		query_params.insert(DictUnit("atmosphere_pressure", NumToString(this->CurrentWeather.APressure)));
+		query_params.insert(DictUnit("altitude", NumToString(this->CurrentWeather.Altitude)));
+		query_params.insert(DictUnit("humidity", NumToString(this->CurrentWeather.Humidity)));
+		this->ErrorNum = StringToNum(this->ServerQuery(query_params));
 
-	switch (this->ErrorNum) {
-		case 1:
-			cout << COLOR_RED << "The station was not found" << COLOR_RESET << endl;
-			if (!this->Register()) {
-				this->ErrorNum = 1;
+		switch (this->ErrorNum) {
+			case 0:
+				cout << COLOR_CYAN << "Temperature:\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
+				cout << COLOR_CYAN << "Pressure:\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
+				cout << COLOR_CYAN << "Altitude:\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
+				cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl;
+				cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl;
 				break;
-			}
 
-		case 0:
-			cout << COLOR_CYAN << "Temperature:\t" << COLOR_RESET << this->CurrentWeather.Temperature << " *C" << endl;
-			cout << COLOR_CYAN << "Pressure:\t" << COLOR_RESET << this->CurrentWeather.APressure << " mm" << endl;
-			cout << COLOR_CYAN << "Altitude:\t" << COLOR_RESET << this->CurrentWeather.Altitude << " m" << endl;
-			cout << COLOR_CYAN << "Humidity:\t" << COLOR_RESET << this->CurrentWeather.Humidity << " %" << endl;
-			cout << COLOR_MAGENTA << "Timeout = " << this->CurrentTimeoutMinutes << " min" << COLOR_RESET << endl << endl;
-			break;
+			case 1:
+				cout << COLOR_RED << "The station was not found" << COLOR_RESET << endl;
+				if (!this->Register()) {
+					this->ErrorNum = 1;
+					break;
+				}
+				registered = false;
+				break;
 
-		case 2:
-			cout << COLOR_RED << "Required parameters (temperature, humidity or atmosphere pressure) is missing" << COLOR_RESET << endl;
-			break;
+			case 2:
+				cout << COLOR_RED << "Required parameters (temperature, humidity or atmosphere pressure) is missing" << COLOR_RESET << endl;
+				break;
 
-		default:
-			cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
-			break;
-	}
+			default:
+				cout << COLOR_RED << "Unexpected error" << COLOR_RESET << endl;
+				break;
+		}
+	while (!registered);
 	return true;
 
 }
